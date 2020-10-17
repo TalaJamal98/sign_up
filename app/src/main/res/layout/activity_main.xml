@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+<RelativeLayout
+android:id="@+id/head"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:ignore="MissingConstraints">
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="70dp"
+android:src="@drawable/sign"
+        android:layout_marginTop="50dp"
+
+        tools:ignore="MissingConstraints"></ImageView>
+
+
+</RelativeLayout>
+<LinearLayout
+app:layout_constraintTop_toBottomOf="@id/head"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <EditText
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="7dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/border"
+        android:hint="First name"
+        android:textSize="15sp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+android:background="@drawable/border"
+        android:textSize="15sp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="7dp"
+
+        android:hint="Second name" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textSize="15sp"
+        android:inputType="textPassword"
+        android:background="@drawable/border"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="7dp"
+
+        android:hint="Password" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textSize="15sp"
+        android:inputType="textPassword"
+        android:background="@drawable/border"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="7dp"
+        android:hint="Confirm password" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textSize="15sp"
+        android:background="@drawable/border"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="7dp"
+        android:hint="Email" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginRight="40dp"
+        android:background="@drawable/border"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="7dp"
+        android:gravity="left"
+
+        android:text="gender"
+        android:textSize="17sp"
+         />
+
+
+
+    <RadioGroup
+        android:gravity="right"
+        android:id="@+id/radioGroup1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="2dp"
+        android:orientation="horizontal"
+        >
+
+        <RadioButton
+            android:id="@+id/radioButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Male" />
+
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/radioGroup1"
+            android:layout_below="@+id/radioGroup1"
+            android:text="Female" />
+    </RadioGroup>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="7dp"
+        android:layout_marginTop="10dp"
+
+        android:gravity="left"
+
+        android:text="Date of birth"
+        android:textSize="17sp"
+       />
+
+    <DatePicker
+
+        android:id="@+id/datePicker1"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        android:scaleX="0.7"
+        android:scaleY="0.7"
+android:layout_gravity="center"
+        android:padding="0dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign Up"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded"
+        ></Button>
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:padding="20dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+
+        <TextView
+            android:id="@+id/signInButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Already have an account?" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="Sign In"
+            android:textColor="@color/yellow"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
