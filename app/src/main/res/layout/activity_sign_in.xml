@@ -20,43 +20,48 @@
 </RelativeLayout>
 
     <LinearLayout
-        app:layout_constraintTop_toBottomOf="@id/head"
-        android:layout_marginTop="20dp"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/head">
 
-        <EditText android:hint="Email"
-           android:background="@drawable/border"
+        <EditText
+            android:id="@+id/emailLog"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginLeft="20dp"
             android:layout_marginBottom="7dp"
-            />
-        <EditText android:hint="Password"
+            android:background="@drawable/border"
+            android:hint="Email" />
 
-android:background="@drawable/border"
+        <EditText
+            android:layout_width="match_parent"
+android:id="@+id/passwordLog"
+            android:layout_height="60dp"
             android:layout_marginLeft="20dp"
             android:layout_marginBottom="7dp"
-            android:inputType="textPassword"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            />
+            android:background="@drawable/border"
+            android:hint="Password"
+            android:inputType="textPassword" />
+
         <TextView
-            android:layout_marginTop="15dp"
-            android:gravity="right"
-            android:layout_marginRight="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Forgot password?"/>
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:gravity="right"
+            android:text="Forgot password?" />
 
         <Button
+            android:id="@+id/loginBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded"
-            android:text="Sign In"
             android:layout_gravity="center"
-            android:layout_marginTop="40dp"></Button>
+            android:layout_marginTop="40dp"
+            android:background="@drawable/rounded"
+            android:text="Sign In"></Button>
 
 
     </LinearLayout>
@@ -67,7 +72,10 @@ android:background="@drawable/border"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:padding="20dp"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.713"
+        tools:layout_editor_absoluteX="0dp">
 
 
         <TextView
@@ -77,6 +85,7 @@ android:background="@drawable/border"
             android:text="Don't have an account?" />
 
         <TextView
+            android:id="@+id/sign_in_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
