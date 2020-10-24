@@ -127,8 +127,11 @@ pd.show();
                             mDatabase.setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    // Write was successful!
-                                    // ...
+                                    Intent intent = new Intent(sign_up.this , MainActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                    finish();
+
                                 }
                             })
                                     .addOnFailureListener(new OnFailureListener() {

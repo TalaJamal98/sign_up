@@ -6,4 +6,39 @@
     android:layout_height="match_parent"
     tools:context=".search_item">
 
+     <com.google.android.material.appbar.AppBarLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+         android:id="@+id/app_bar"
+         android:background="?android:attr/windowBackground"
+         >
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bar"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_name"></ImageView>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Search..."
+            android:id="@+id/search_bar"
+android:background="@android:color/transparent"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:paddingStart="10dp"
+          >
+
+        </EditText>
+
+
+    </androidx.appcompat.widget.Toolbar>
+     </com.google.android.material.appbar.AppBarLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

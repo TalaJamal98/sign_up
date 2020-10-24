@@ -8,28 +8,32 @@
 
 
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_container"
+        android:layout_above="@id/bottom"/>
 
-
-
-    <Button
-        android:id="@+id/button_sign_up"
-        android:layout_width="wrap_content"
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sign Up"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/rounded"
-        tools:ignore="MissingConstraints"></Button>
+        android:id="@+id/bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="MissingConstraints">
 
-    <Button
-        android:id="@+id/button_sign_in"
-        app:layout_constraintTop_toBottomOf="@+id/button_sign_up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sign In"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/rounded"
-        tools:ignore="MissingConstraints"></Button>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bottom_navigation"
+            app:itemIconTint="@color/drawer_item"
+            app:labelVisibilityMode="unlabeled"
+            android:background="?android:attr/windowBackground"
+            app:menu="@menu/bottom_menu"/>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

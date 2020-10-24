@@ -1,38 +1,68 @@
 package com.example.signup;
-
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.view.MenuItem;
+
+import com.example.signup.Fragment.FilterFragment;
+import com.example.signup.Fragment.HomeFragment;
+import com.example.signup.Fragment.NotificationsFragment;
+import com.example.signup.Fragment.SearchFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 
 public class MainActivity extends AppCompatActivity {
-Button signup,signin;
+
+    private BottomNavigationView bottomNavigationView;
+    private Fragment selectorFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        signup=findViewById(R.id.button_sign_up);
-        signin=findViewById(R.id.button_sign_in);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        signup.setOnClickListener(new View.OnClickListener() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                Intent k = new Intent(MainActivity.this, sign_up.class);
-                startActivity(k);
-                finish();
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+                switch (menuItem.getItemId()){
+                    case R.id.nav_home :
+                        selectorFragment = new HomeFragment();
+                        break;
+
+                    case R.id.nav_search :
+                        selectorFragment = new SearchFragment();
+                        break;
+
+                    case R.id.nav_add :
+                        selectorFragment = null;
+                        startActivity(new Intent(MainActivity.this , PostActivity.class));
+                        break;
+
+                    case R.id.nav_heart :
+                        selectorFragment = new NotificationsFragment();
+                        break;
+
+                    case R.id.nav_profile :
+                        selectorFragment = new FilterFragment();
+                        break;
+                }
+
+                if (selectorFragment != null){
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container , selectorFragment).commit();
+                }
+
+                return  true;
+
             }
         });
 
-        signin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent k = new Intent(MainActivity.this, sign_in.class);
-                startActivity(k);
-                finish();
-            }
-        });
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container , new HomeFragment()).commit();
+
     }
 }

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -63,7 +64,14 @@ ProgressDialog pd;
         LogBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginUser();
+                String txt_email = emailLogin.getText().toString();
+                String txt_password = passwordLogin.getText().toString();
+
+                if (TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)){
+                    Toast.makeText(sign_in.this, "Empty Credentials!", Toast.LENGTH_SHORT).show();
+                } else {
+                    LoginUser(txt_email , txt_password);
+                }
             }
         });
 
@@ -71,42 +79,37 @@ ProgressDialog pd;
 
 
 
-    private void LoginUser() {
+    private void LoginUser(String email , String password) {
         pd=new ProgressDialog(sign_in.this);
         pd.setMessage("Please wait..");
         pd.show();
 
 
-        final String email = emailLogin.getText().toString().trim();
-        final String password = passwordLogin.getText().toString();
 
 
         android.util.Log.v("success", "in finction btn");
-        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(sign_in.this, new OnCompleteListener<AuthResult>() {
+        mAuth.signInWithEmailAndPassword(email , password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                FirebaseUser user = mAuth.getCurrentUser();
-                String userId = user.getUid();
-                mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
-mDatabase.addValueEventListener(new ValueEventListener() {
-    @Override
-    public void onDataChange(@NonNull DataSnapshot snapshot) {
-        pd.dismiss();
-        Log.v("complete","yes yes");
-        Intent intent=new Intent(sign_in.this,sign_up.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
-    }
-
-    @Override
-    public void onCancelled(@NonNull DatabaseError error) {
-pd.dismiss();
-    }
-});
+                if (task.isSuccessful()){
+                    Toast.makeText(sign_in.this, "Update the profile " +
+                            "for better expereince", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(sign_in.this , MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(sign_in.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
     }
+
+
 
                 }
 
