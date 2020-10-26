@@ -115,15 +115,16 @@ pd.show();
                             mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
                             HashMap<String, Object> map = new HashMap<>();
                             map.put("id", userId);
-                            map.put("first_name", first_name.getText().toString());
-                            map.put("second_name", sec_nam);
+                            map.put("firstname", first_name.getText().toString());
+                            map.put("secondname", sec_nam);
+                            map.put("username", first_name.getText().toString()+" "+second_name.getText().toString());
                             map.put("email", email);
                             map.put("password", password);
-                            map.put("about_me", "");
+                            map.put("aboutme", "");
                             map.put("birthdate", dateFormat);
                             map.put("gender", Gender);
 
-                            map.put("profile_pic", "https://firebasestorage.googleapis.com/v0/b/bib-bayitback.appspot.com/o/653528.jpg?alt=media&token=990070e6-d08f-4946-b8b3-d1af59796e5a");
+                            map.put("profilepic", "https://firebasestorage.googleapis.com/v0/b/bib-bayitback.appspot.com/o/653528.jpg?alt=media&token=990070e6-d08f-4946-b8b3-d1af59796e5a");
                             mDatabase.setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {

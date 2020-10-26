@@ -50,6 +50,7 @@ dependencies {
 
 
     implementation "com.hendraanggrian.appcompat:socialview:0.2"
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
 
 
