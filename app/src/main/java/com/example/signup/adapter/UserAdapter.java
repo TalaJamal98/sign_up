@@ -58,9 +58,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
         final User user = mUsers.get(position);
         holder.btnFollow.setVisibility(View.VISIBLE);
 
-        holder.username.setText(user.getFirst_name()+" "+user.getSecond_name());
+        holder.username.setText(user.getFirstname()+" "+user.getSecondname());
 
-        Picasso.get().load(user.getProfile_pic()).placeholder(R.mipmap.ic_launcher).into(holder.imageProfile);
+        Picasso.get().load(user.getProfilepic()).placeholder(R.mipmap.ic_launcher).into(holder.imageProfile);
 
         isFollowed(user.getId() , holder.btnFollow);
 
@@ -78,7 +78,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
                     FirebaseDatabase.getInstance().getReference().child("Follow").
                             child(user.getId()).child("followers").child(firebaseUser.getUid()).setValue(true);
 
-                    //addNotification(user.getId());
+                    addNotification(user.getId());
                 } else {
                     FirebaseDatabase.getInstance().getReference().child("Follow").
                             child((firebaseUser.getUid())).child("following").child(user.getId()).removeValue();
@@ -148,6 +148,18 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
         }
     }
 
+    private void addNotification(String userId) {
+        HashMap<String, Object> map = new HashMap<>();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Notifications");
+        String notId = ref.push().getKey();
 
+        map.put("text", "liked your post.");
+        map.put("isPost", true);
+        map.put("isSeen",false);
+        map.put("notid",notId);
+
+
+        FirebaseDatabase.getInstance().getReference().child("Notifications").child(firebaseUser.getUid()).child(notId).setValue(map);
+    }
 
 }

@@ -1,57 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginRight="10dp"
-    android:layout_marginLeft="10dp"
-    android:background="@drawable/bg_item"
-    android:orientation="horizontal"
-    android:padding="12dp"
-    android:layout_marginTop="8dp"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+
+android:background="@drawable/bg_user"
+android:orientation="horizontal"
+android:padding="12dp"
+
     >
 
+<de.hdodenhof.circleimageview.CircleImageView
+    android:id="@+id/pic"
+    android:layout_width="60dp"
+    android:layout_height="60dp"
+    android:src="@drawable/logo"
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/pic"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@drawable/logo"
+    >
 
-        >
+</de.hdodenhof.circleimageview.CircleImageView>
+<LinearLayout
+    android:layout_width="100dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:layout_marginLeft="12dp"
+    android:layout_toEndOf="@+id/pic"
+    android:layout_centerVertical="true"
+    android:orientation="horizontal"
 
-    </de.hdodenhof.circleimageview.CircleImageView>
 
-    <LinearLayout
-        android:layout_width="298dp"
+
+    >
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="165dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="12dp"
-        android:layout_toEndOf="@+id/pic"
-        android:orientation="horizontal"
+        android:maxLines="1"
+        android:text="username"
+        android:textColor="#4a4a4a"
+        android:textSize="15sp"
+        android:textStyle="bold"
 
-        >
-
-        <TextView
-            android:id="@+id/username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:text="username"
-            android:textColor="#4a4a4a"
-            android:textSize="15sp"
-
-            />
-
-        <Button
-            android:id="@+id/btn_follow"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginLeft="120dp"
-            android:background="@drawable/rounded"
-            android:textColor="@color/yellow" />
+        />
 
 
-    </LinearLayout>
 
 </LinearLayout>
+<Button
+    android:id="@+id/btn_follow"
+    android:layout_width="wrap_content"
+    android:layout_height="30dp"
+    android:layout_marginRight="20dp"
+    android:background="@drawable/rounded"
+    android:textColor="@color/white"
+    android:layout_centerVertical="true"
+    android:layout_alignParentEnd="true"
+android:visibility="gone"
+   />
+
+
+</RelativeLayout>
+
+

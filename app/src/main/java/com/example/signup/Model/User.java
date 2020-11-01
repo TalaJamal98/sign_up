@@ -11,25 +11,34 @@ String aboutme;
     String password;
     String gender;
     String username;
+    String city;
+    String phone;
 
 
     public User(){}
-    public User(String id, String firstname, String secondname, String birthdate, String profilepic, String aboutMe, String city, String email, String password, String gender) {
+    public User(String id, String firstname, String secondname, String birthdate, String profilepic, String aboutme, String city, String email, String password, String gender,String phone) {
         this.id = id;
         this.firstname = firstname;
         this.secondname = secondname;
         this.birthdate = birthdate;
         this.profilepic = profilepic;
-        this.aboutme = aboutMe;
+        this.aboutme = aboutme;
         this.email = email;
+        this.city = city;
         this.password = password;
         this.gender = gender;
         this.username = username;
+        this.phone = username;
+
 
     }
 
-    public String getAbout_me() {
-        return aboutme;
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getUsername() {
@@ -44,27 +53,50 @@ String aboutme;
         return id;
     }
 
-    public String getFirst_name() {
-        return firstname;
-    }
-
-    public String getSecond_name() {
-        return secondname;
-    }
 
     public String getBirthdate() {
         return birthdate;
     }
 
-    public String getProfile_pic() {
-        return profilepic;
-    }
-
-    public String getAboutMe() {
+    public String getAboutme() {
         return aboutme;
     }
 
+    public void setAboutme(String aboutme) {
+        this.aboutme = aboutme;
+    }
 
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getSecondname() {
+        return secondname;
+    }
+
+    public void setSecondname(String secondname) {
+        this.secondname = secondname;
+    }
+
+    public String getProfilepic() {
+        return profilepic;
+    }
+
+    public void setProfilepic(String profilepic) {
+        this.profilepic = profilepic;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public String getEmail() {
         return email;
@@ -82,25 +114,12 @@ String aboutme;
         this.id = id;
     }
 
-    public void setFirst_name(String first_name) {
-        this.firstname = first_name;
-    }
-
-    public void setSecond_name(String second_name) {
-        this.secondname = second_name;
-    }
 
     public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
 
-    public void setProfile_pic(String profile_pic) {
-        this.profilepic = profile_pic;
-    }
 
-    public void setAbout_me(String about_me) {
-        this.aboutme = about_me;
-    }
 
 
 

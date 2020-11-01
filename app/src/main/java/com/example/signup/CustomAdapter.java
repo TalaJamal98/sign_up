@@ -36,10 +36,8 @@ public class CustomAdapter extends ArrayAdapter<customItem> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_spinner, parent, false);
         }
         customItem items = getItem(position);
-        ImageView spinnerImage = convertView.findViewById(R.id.ivCustomSpinner);
         TextView spinnerName = convertView.findViewById(R.id.tvCustomSpinner);
         if (items != null) {
-            spinnerImage.setImageResource(items.getSpinnerImage());
             spinnerName.setText(items.getSpinnerText());
         }
         return convertView;

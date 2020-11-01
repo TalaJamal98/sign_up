@@ -28,14 +28,13 @@ import com.example.signup.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
 public class SearchFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private List<User> mUsers;
     private UserAdapter userAdapter;
 
-    private RecyclerView recyclerViewTags;
+
 
     private SocialAutoCompleteTextView search_bar;
 
@@ -48,13 +47,10 @@ public class SearchFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        recyclerViewTags = view.findViewById(R.id.recycler_view_tags);
-        recyclerViewTags.setHasFixedSize(true);
-        recyclerViewTags.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
         mUsers = new ArrayList<>();
-        userAdapter = new UserAdapter(getContext(), mUsers, true);
+        userAdapter = new UserAdapter(getContext() , mUsers , true);
         recyclerView.setAdapter(userAdapter);
 
         search_bar = view.findViewById(R.id.search_bar);
@@ -74,6 +70,7 @@ public class SearchFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
+              //  filter(s.toString());
             }
         });
 
@@ -130,5 +127,6 @@ public class SearchFragment extends Fragment {
             }
         });
     }
+
 
 }

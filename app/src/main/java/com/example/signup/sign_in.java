@@ -35,12 +35,32 @@ import java.util.Date;
 import java.util.HashMap;
 
 public class sign_in extends AppCompatActivity {
-TextView signInText;
-EditText emailLogin,passwordLogin;
-Button LogBtn;
-ProgressDialog pd;
+    TextView signInText;
+    EditText emailLogin,passwordLogin;
+    Button LogBtn;
+    ProgressDialog pd;
     private DatabaseReference mDatabase;
     FirebaseAuth mAuth;
+    boolean checker;
+
+    private void emailCheck(){
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        checker= user.isEmailVerified();
+        if(checker){
+            Toast.makeText(sign_in.this, "all great", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(sign_in.this , MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+
+
+        }else{
+            Toast.makeText(sign_in.this, "Please validate your email", Toast.LENGTH_SHORT).show();
+            pd.dismiss();
+            mAuth.signOut();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,12 +112,14 @@ ProgressDialog pd;
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    Toast.makeText(sign_in.this, "Update the profile " +
-                            "for better expereince", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(sign_in.this , MainActivity.class);
+
+                    emailCheck();
+
+
+              /*      Intent intent = new Intent(sign_in.this , MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
-                    finish();
+                    finish();*/
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -111,6 +133,4 @@ ProgressDialog pd;
 
 
 
-                }
-
-
+}

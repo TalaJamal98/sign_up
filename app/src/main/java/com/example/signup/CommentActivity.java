@@ -1,3 +1,4 @@
+
 package com.example.signup;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -48,6 +50,7 @@ public class CommentActivity extends AppCompatActivity {
     private String authorId;
 
     FirebaseUser fUser;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,13 +89,32 @@ public class CommentActivity extends AppCompatActivity {
 
         getUserImage();
 
+        FirebaseDatabase.getInstance().getReference().child("users").child(fUser.getUid()).addValueEventListener(new ValueEventListener() {
+                      @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                          user = dataSnapshot.getValue(User.class);
+
+
+                                      }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (TextUtils.isEmpty(addComment.getText().toString())) {
                     Toast.makeText(CommentActivity.this, "No comment added!", Toast.LENGTH_SHORT).show();
+
                 } else {
                     putComment();
+                    addNotification(postId, authorId);
+
                 }
             }
         });
@@ -152,14 +174,14 @@ public class CommentActivity extends AppCompatActivity {
 
     private void getUserImage() {
 
-        FirebaseDatabase.getInstance().getReference().child("Users").child(fUser.getUid()).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("users").child(fUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                if (user.getImageurl().equals("default")) {
+                if (user.getProfilepic()==null || user.getProfilepic().equals("")) {
                     imageProfile.setImageResource(R.mipmap.ic_launcher);
                 } else {
-                    Picasso.get().load(user.getImageurl()).into(imageProfile);
+                    Picasso.get().load(user.getProfilepic()).into(imageProfile);
                 }
             }
 
@@ -170,4 +192,26 @@ public class CommentActivity extends AppCompatActivity {
         });
 
     }
+
+    private void addNotification(String postId, String publisherId) {
+        HashMap<String, Object> map = new HashMap<>();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Notifications");
+        String notId = ref.push().getKey();
+
+        //if(!publisherId.equals(fUser.getUid())) {
+            Log.d("fede", ""+publisherId);
+            Log.d("fede", ""+fUser.getUid());
+
+            map.put("userid", publisherId);
+
+            map.put("text", user.getUsername()+" commented on your post.");
+            map.put("postid", postId);
+            map.put("isPost", true);
+            map.put("Seen","no");
+        map.put("notid",notId);
+
+            FirebaseDatabase.getInstance().getReference().child("Notifications").child(fUser.getUid()).child(notId).setValue(map);
+        //}
+    }
 }
+

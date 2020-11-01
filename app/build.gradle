@@ -20,7 +20,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
     }
+
 }
 
 dependencies {
@@ -51,7 +53,10 @@ dependencies {
 
     implementation "com.hendraanggrian.appcompat:socialview:0.2"
     implementation 'com.squareup.picasso:picasso:2.71828'
+    compile 'com.github.jgabrielfreitas:BlurImageView:1.0.1'
 
+    compile 'jp.wasabeef:picasso-transformations:2.1.0'
+    compile 'jp.co.cyberagent.android:gpuimage:2.1.0'
 
 
     // auto-complete hashtag and mention

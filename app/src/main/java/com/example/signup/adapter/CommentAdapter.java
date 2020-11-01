@@ -68,10 +68,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                 User user = dataSnapshot.getValue(User.class);
 
                 holder.username.setText(user.getUsername());
-                if (user.getProfile_pic().equals("default")) {
+                if (user.getProfilepic()==null || user.getProfilepic().equals("")) {
                     holder.imageProfile.setImageResource(R.mipmap.ic_launcher);
                 } else {
-                    Picasso.get().load(user.getProfile_pic()).into(holder.imageProfile);
+                    Picasso.get().load(user.getProfilepic()).into(holder.imageProfile);
                 }
             }
 

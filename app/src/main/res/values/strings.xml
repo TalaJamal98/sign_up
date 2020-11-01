@@ -2,4 +2,7 @@
     <string name="app_name">sign up</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="open">empty</string>
+
+    <string name="close">empty</string>
 </resources>

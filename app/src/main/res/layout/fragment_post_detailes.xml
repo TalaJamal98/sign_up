@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Fragment.PostDetailesFragment">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bar"
+            tools:ignore="MissingConstraints">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/back"></ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PRODUCT"
+                android:layout_gravity="center"
+                android:textSize="20sp">
+
+            </TextView>
+
+
+
+
+
+        </androidx.appcompat.widget.Toolbar>
+        <View
+            android:id="@+id/sp"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            app:layout_constraintTop_toBottomOf="@id/bar"
+            android:background="#3d5c5c"
+            ></View>
+
+
+        <ScrollView
+            android:id="@+id/scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="150dp"
+                        android:background="#ebebe0"
+                        ></ImageView>
+
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="name"
+                        android:textSize="18sp"
+                        android:layout_marginLeft="45dp"
+                        android:layout_marginTop="430dp"></TextView>
+
+                    <TextView
+                        android:id="@+id/price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Price"
+                        android:textSize="18sp"
+                        android:layout_marginLeft="45dp"
+
+                        android:layout_below="@id/name"></TextView>
+
+                    <TextView
+                        android:id="@+id/color"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Color"
+                        android:textSize="18sp"
+                        android:layout_marginLeft="45dp"
+                        android:layout_below="@id/price"></TextView>
+
+                    <TextView
+                        android:id="@+id/size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Size"
+                        android:textSize="18sp"
+                        android:layout_marginLeft="45dp"
+                        android:layout_below="@id/color"></TextView>
+
+                    <TextView
+                        android:id="@+id/cat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="category"
+                        android:textSize="18sp"
+                        android:layout_marginLeft="45dp"
+                        android:layout_below="@id/size"></TextView>
+
+
+                    <LinearLayout
+                        android:id="@+id/description"
+                        android:layout_width="350dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal"
+                        android:layout_below="@+id/cat"
+                        android:layout_marginLeft="45dp"
+                        android:layout_marginTop="10dp"
+                        >
+                        <ScrollView
+                            android:id="@+id/regForm"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <TextView
+                                android:id="@+id/des"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:inputType="text"
+                                android:text="here we type the description (it has a scroll for it's own"
+                                android:textSize="13sp"></TextView>
+
+
+
+                        </ScrollView>
+                    </LinearLayout>
+                    <Button
+                        android:layout_width="150dp"
+                        android:layout_height="35dp"
+
+                        android:text="buy"
+                        android:layout_below="@id/description"
+                        android:layout_marginTop="35dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/rounded"
+                        ></Button>
+
+                </RelativeLayout>
+
+
+                <ImageView
+                    android:id="@+id/product"
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="100dp"
+                    android:layout_marginLeft="40dp"
+                    android:src="@drawable/cactus"></ImageView>
+
+                <LinearLayout
+                    android:layout_marginTop="377dp"
+                    android:layout_marginLeft="45dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:src="@drawable/heart">
+
+                    </ImageView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:text="428 Likes"
+                        android:textSize="10dp"
+
+                        android:layout_height="wrap_content">
+
+                    </TextView>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:src="@drawable/com">
+
+                    </ImageView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:text="428 Comments"
+                        android:textSize="10dp"
+
+                        android:layout_height="wrap_content">
+
+                    </TextView>
+
+
+                </LinearLayout>
+            </FrameLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
