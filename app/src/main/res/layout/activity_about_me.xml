@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditPhoneActivity">
-
+    tools:context=".AboutMeActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
@@ -14,7 +13,6 @@
         tools:ignore="MissingConstraints">
 
         <ImageView
-            android:id="@+id/back"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/back"></ImageView>
@@ -22,7 +20,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Phone"
+            android:text="About Me"
             android:layout_gravity="center"
             android:textSize="20sp">
 
@@ -40,10 +38,10 @@
 
     <ImageView
         android:id="@+id/pic"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_marginTop="56dp"
-        android:src="@drawable/phone_icom"
+        android:src="@drawable/edit_icom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/bar"
@@ -55,7 +53,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/pic"
         android:layout_marginTop="20dp"
-        android:text="EDIT PHONE NUMBER"
+        android:text="EDIT ABOUT ME"
         android:gravity="center"
         android:textSize="25sp"
         ></TextView>
@@ -74,16 +72,14 @@
 
          ></com.google.android.material.textfield.TextInputLayout> -->
 
-
     <EditText
         android:id="@+id/first"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         tools:ignore="MissingConstraints"
         app:layout_constraintTop_toBottomOf="@id/text"
-        android:hint="Phone Number"
+        android:hint="About me"
         android:paddingHorizontal="10dp"
-        android:inputType="phone"
 
         android:background="@drawable/border"
         android:layout_marginTop="40dp"
@@ -94,10 +90,11 @@
         >
 
     </EditText>
+
+
     <Button
         android:id="@+id/save"
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="40dp"
         android:layout_height="50dp"
         android:background="@drawable/rounded"
         app:layout_constraintTop_toBottomOf="@id/first"

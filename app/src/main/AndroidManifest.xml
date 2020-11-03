@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MessageActivity"></activity>
+        <activity android:name=".AboutMeActivity"></activity>
+        <activity android:name=".EditDateActivity" />
+        <activity android:name=".MessageActivity" />
         <activity android:name=".EditPhoneActivity" />
         <activity android:name=".EditCityActivity" />
         <activity android:name=".EditGenderActivity" />

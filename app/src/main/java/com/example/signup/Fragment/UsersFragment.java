@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import com.example.signup.Model.User;
 import com.example.signup.R;
 import com.example.signup.adapter.UserAdapter;
+import com.example.signup.adapter.UserChatAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,7 +33,7 @@ public class UsersFragment extends Fragment {
 
         private RecyclerView recyclerView;
         private List<User> mUsers;
-        private UserAdapter userAdapter;
+        private UserChatAdapter userAdapter;
 
 
 
@@ -50,7 +51,7 @@ public class UsersFragment extends Fragment {
 
 
             mUsers = new ArrayList<>();
-            userAdapter = new UserAdapter(getContext() , mUsers , true);
+            userAdapter = new UserChatAdapter(getContext() , mUsers , true);
             recyclerView.setAdapter(userAdapter);
 
             search_bar = view.findViewById(R.id.search_bar);

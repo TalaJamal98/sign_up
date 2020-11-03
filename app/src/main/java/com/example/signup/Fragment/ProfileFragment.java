@@ -74,8 +74,9 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         fUser = FirebaseAuth.getInstance().getCurrentUser();
+/*        Intent intent = getIntent();
 
-profileId=fUser.getUid();
+        profileId=intent.getStringExtra("publisherId"*/);
 
         imageProfile = view.findViewById(R.id.profile_image);
         //options = view.findViewById(R.id.options);

@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.example.signup.Model.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,6 +29,7 @@ public class EditPasswordActivity extends AppCompatActivity {
     private EditText pass2;
     private EditText conf;
     private Button save;
+    ImageView back1;
 
     private FirebaseUser fUser;
 
@@ -50,12 +52,19 @@ public class EditPasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_password);
+        back1=findViewById(R.id.back);
 
         pass1=findViewById(R.id.pass1);
         pass2=findViewById(R.id.pass);
         conf=findViewById(R.id.confirm);
         save=findViewById(R.id.save);
         fUser = FirebaseAuth.getInstance().getCurrentUser();
+        back1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         FirebaseDatabase.getInstance().getReference().child("users").child(fUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override

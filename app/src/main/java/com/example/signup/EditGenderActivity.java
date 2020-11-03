@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -30,12 +31,14 @@ public class EditGenderActivity extends AppCompatActivity implements AdapterView
     private Button save;
     ArrayList<customItem> customList;
     private FirebaseUser fUser;
+    ImageView back1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_gender);
         save = findViewById(R.id.save);
+        back1=findViewById(R.id.back);
 
         spinner = findViewById(R.id.customSpinner);
 
@@ -53,6 +56,12 @@ public class EditGenderActivity extends AppCompatActivity implements AdapterView
             spinner.setAdapter(customAdapter);
             spinner.setOnItemSelectedListener(this);
         }
+        back1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         FirebaseDatabase.getInstance().getReference().child("users").child(fUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override

@@ -1,8 +1,13 @@
 package com.example.signup.adapter;
 
-
+import java.text.ParseException;
+import java.util.Date;
 import android.content.Context;
 import android.content.Intent;
+import android.icu.util.Calendar;
+import android.os.Build;
+import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,6 +46,8 @@ import com.example.signup.Model.User;
 import com.example.signup.R;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -69,36 +78,37 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
 
         final Post post = mPosts.get(position);
         Picasso.get().load(post.getImageurl()).into(holder.postImage);
-       // holder.description.setText(post.getDescription());
+        // holder.description.setText(post.getDescription());
 
         FirebaseDatabase.getInstance().getReference().child("users").child(post.getPublisher()).addValueEventListener(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
 
-                if(user!=null) {
-                    Log.e("err",user.getId());
+                if (user != null) {
+                    Log.e("err", user.getId());
 
-                   if (user.getProfilepic()==null || user.getProfilepic().equals("")) {
-                       // Log.e("err",user.getProfile_pic());
+                    if (user.getProfilepic() == null || user.getProfilepic().equals("")) {
+                        // Log.e("err",user.getProfile_pic());
 
                         holder.imageProfile.setImageResource(R.mipmap.ic_launcher);
                     } else {
-                       Picasso.get().load(user.getProfilepic()).into(holder.imageProfile);
+                        Picasso.get().load(user.getProfilepic()).into(holder.imageProfile);
 
-                   }
+                    }
 
                     holder.username.setText(user.getUsername());
                     holder.category.setText(post.getCategory());
                     holder.price.setText(post.getPrice());
                     holder.prod_name.setText(post.getName());
+                    holder.post_time.setText(convert(post.getTime()));
 
 
-                }
-                else{
-                    Log.v("no",post.getPublisher());
+                } else {
+                    Log.v("no", post.getPublisher());
 
-                    Log.v("no","no user");
+                    Log.v("no", "no user");
                 }
             }
 
@@ -108,10 +118,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
             }
         });
 
-       isLiked(post.getPostid(), holder.like);
+        isLiked(post.getPostid(), holder.like);
         noOfLikes(post.getPostid(), holder.noOfLikes);
         getComments(post.getPostid(), holder.noOfComments);
-       // isSaved(post.getPostid(), holder.save);
+        // isSaved(post.getPostid(), holder.save);
 
         holder.like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,7 +130,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
                     FirebaseDatabase.getInstance().getReference().child("Likes")
                             .child(post.getPostid()).child(firebaseUser.getUid()).setValue(true);
 
-                   addNotification(post.getPostid(), post.getPublisher());
+                    addNotification(post.getPostid(), post.getPublisher());
                 } else {
                     FirebaseDatabase.getInstance().getReference().child("Likes")
                             .child(post.getPostid()).child(firebaseUser.getUid()).removeValue();
@@ -140,13 +150,22 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
         holder.imageProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+/*
+
+                Fragment fragmentB=new Fragment();
+                Bundle bundle=new Bundle();
+                bundle.putString("publisherId",post.getPublisher());
+                fragmentB.setArguments(bundle);
+*/
+
                 Intent intent = new Intent(mContext, ProfileFragment.class);
                 intent.putExtra("publisherId", post.getPublisher());
                 mContext.startActivity(intent);
             }
         });
 
-       holder.comment.setOnClickListener(new View.OnClickListener() {
+        holder.comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, CommentActivity.class);
@@ -200,7 +219,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
             }
         });
 
-       holder.username.setOnClickListener(new View.OnClickListener() {
+        holder.username.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mContext.getSharedPreferences("PROFILE", Context.MODE_PRIVATE)
@@ -212,24 +231,24 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
         });
 
 
-       holder.postImage.setOnClickListener(new View.OnClickListener() {
+        holder.postImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit().putString("postid", post.getPostid()).apply();
 
-                ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction()
+                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, new PostDetailesFragment()).commit();
             }
         });
 
-       holder.noOfLikes.setOnClickListener(new View.OnClickListener() {
+        holder.noOfLikes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, FollowerActivity.class);
                 intent.putExtra("id", post.getPublisher());
                 intent.putExtra("title", "likes");
                 intent.putExtra("postid", post.getPostid());
-                Log.e("hi",post.getPostid());
+                Log.e("hi", post.getPostid());
 
 
                 mContext.startActivity(intent);
@@ -244,7 +263,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
                 intent.putExtra("title", "likes");
                 intent.putExtra("postid", post.getPostid());
 
-                Log.e("hi",post.getPostid());
+                Log.e("hi", post.getPostid());
 
                 mContext.startActivity(intent);
             }
@@ -267,6 +286,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
         public ImageView more;
         public TextView category;
         public TextView prod_name;
+        public TextView post_time;
+
         public TextView price;
         public TextView username;
         public TextView noOfLikes;
@@ -284,10 +305,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
 
             imageProfile = itemView.findViewById(R.id.profile_image);
             postImage = itemView.findViewById(R.id.post_image);
-          like = itemView.findViewById(R.id.like);
+            post_time = itemView.findViewById(R.id.post_time);
+
+            like = itemView.findViewById(R.id.like);
             comment = itemView.findViewById(R.id.comment);
             comLay = itemView.findViewById(R.id.comments);
-likeT=itemView.findViewById(R.id.liketext);
+            likeT = itemView.findViewById(R.id.liketext);
             //  save = itemView.findViewById(R.id.save);
 /*
             more = itemView.findViewById(R.id.more);
@@ -300,7 +323,7 @@ likeT=itemView.findViewById(R.id.liketext);
 
 
             noOfLikes = itemView.findViewById(R.id.post_likes_no);
-        //    author = itemView.findViewById(R.id.author);
+            //    author = itemView.findViewById(R.id.author);
             noOfComments = itemView.findViewById(R.id.post_comments_no);
 
 /*
@@ -350,7 +373,7 @@ likeT=itemView.findViewById(R.id.liketext);
         });
     }
 
-    private void noOfLikes (String postId, final TextView text) {
+    private void noOfLikes(String postId, final TextView text) {
         FirebaseDatabase.getInstance().getReference().child("Likes").child(postId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -364,11 +387,11 @@ likeT=itemView.findViewById(R.id.liketext);
         });
     }
 
-    private void getComments (String postId, final TextView text) {
+    private void getComments(String postId, final TextView text) {
         FirebaseDatabase.getInstance().getReference().child("Comments").child(postId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                text.setText(dataSnapshot.getChildrenCount() +"");
+                text.setText(dataSnapshot.getChildrenCount() + "");
             }
 
             @Override
@@ -383,20 +406,72 @@ likeT=itemView.findViewById(R.id.liketext);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Notifications");
         String notId = ref.push().getKey();
 
-        if(!publisherId.equals(firebaseUser.getUid())) {
-    Log.d("fede", ""+publisherId);
-    Log.d("fede", ""+firebaseUser.getUid());
+        if (!publisherId.equals(firebaseUser.getUid())) {
+            Log.d("fede", "" + publisherId);
+            Log.d("fede", "" + firebaseUser.getUid());
 
-    map.put("userid", publisherId);
-    map.put("text", "liked your post.");
-    map.put("postid", postId);
-    map.put("isPost", true);
-    map.put("Seen","no");
-            map.put("notid",notId);
+            map.put("userid", publisherId);
+            map.put("text", "liked your post.");
+            map.put("postid", postId);
+            map.put("isPost", true);
+            map.put("Seen", "no");
+            map.put("notid", notId);
 
 
-    FirebaseDatabase.getInstance().getReference().child("Notifications").child(firebaseUser.getUid()).child(notId).setValue(map);
-}
+            FirebaseDatabase.getInstance().getReference().child("Notifications").child(firebaseUser.getUid()).child(notId).setValue(map);
+        }
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public static String convert(String time) {
+        final SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateStr = time;
+        String niceDateStr="";
+        try {
+            Date date = inputFormat.parse(dateStr);
+            niceDateStr = (String) DateUtils.getRelativeTimeSpanString(date.getTime() , Calendar.getInstance().getTimeInMillis(), DateUtils.MINUTE_IN_MILLIS);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return niceDateStr;
+    }
+
+
+
+  /*  public static String getTimeAgo(long time, Context ctx) {
+         final int SECOND_MILLIS = 1000;
+       final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
+        final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
+      final int DAY_MILLIS = 24 * HOUR_MILLIS;
+        if (time < 1000000000000L) {
+            // if timestamp given in seconds, convert to millis
+            time *= 1000;
+        }
+
+        long now = getCurrentTime(ctx);
+        if (time > now || time <= 0) {
+            return null;
+        }
+
+        // TODO: localize
+        final long diff = now - time;
+        if (diff < MINUTE_MILLIS) {
+            return "just now";
+        } else if (diff < 2 * MINUTE_MILLIS) {
+            return "a minute ago";
+        } else if (diff < 50 * MINUTE_MILLIS) {
+            return diff / MINUTE_MILLIS + " minutes ago";
+        } else if (diff < 90 * MINUTE_MILLIS) {
+            return "an hour ago";
+        } else if (diff < 24 * HOUR_MILLIS) {
+            return diff / HOUR_MILLIS + " hours ago";
+        } else if (diff < 48 * HOUR_MILLIS) {
+            return "yesterday";
+        } else {
+            return diff / DAY_MILLIS + " days ago";
+        }
+    }*/
 
 }

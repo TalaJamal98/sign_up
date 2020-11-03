@@ -184,6 +184,28 @@ finish();
 
             }
         });
+        phone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(EditProfileActivity.this, EditPhoneActivity.class));
+
+            }
+        });
+        birth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(EditProfileActivity.this, EditDateActivity.class));
+
+            }
+        });
+
+        bio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(EditProfileActivity.this, AboutMeActivity.class));
+
+            }
+        });
     }
 
    /* private void updateProfile() {

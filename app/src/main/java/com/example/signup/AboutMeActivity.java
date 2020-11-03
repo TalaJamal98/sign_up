@@ -23,36 +23,28 @@ import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
-public class EditNameActivity extends AppCompatActivity {
-private EditText f;
-private EditText s;
-private Button save;
+public class AboutMeActivity extends AppCompatActivity {
+    private EditText f;
+    private Button save;
+    ImageView back1;
 
     private FirebaseUser fUser;
-    ImageView back1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_name);
+        setContentView(R.layout.activity_about_me);
         back1=findViewById(R.id.back);
-f=findViewById(R.id.first);
-        s=findViewById(R.id.sec);
+
+        f=findViewById(R.id.first);
         save=findViewById(R.id.save);
         fUser = FirebaseAuth.getInstance().getCurrentUser();
-        back1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         FirebaseDatabase.getInstance().getReference().child("users").child(fUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                f.setText(user.getFirstname());
-                s.setText(user.getSecondname());
+                f.setText(user.getAboutme());
             }
 
             @Override
@@ -65,9 +57,9 @@ f=findViewById(R.id.first);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateName();
+                updateAbout();
 
-finish();
+                finish();
             }
         });
 
@@ -76,14 +68,12 @@ finish();
 
     }
 
-    private void updateName() {
+    private void updateAbout() {
         final ProgressDialog pd = new ProgressDialog(this);
         pd.setMessage("Saving..");
         pd.show();
         HashMap<String, Object> map = new HashMap<>();
-        map.put("username", f.getText().toString().trim()+" "+s.getText().toString().trim());
-        map.put("firstname", f.getText().toString().trim());
-        map.put("secondname", s.getText().toString().trim());
+        map.put("aboutme", f.getText().toString());
 
         FirebaseDatabase.getInstance().getReference().child("users").child(fUser.getUid()).updateChildren(map);
         pd.dismiss();
