@@ -3,6 +3,7 @@ package com.example.signup.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +47,8 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class ProfileFragment extends Fragment {
     private TextView followers;
     private TextView following;
@@ -74,9 +78,17 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         fUser = FirebaseAuth.getInstance().getCurrentUser();
-/*        Intent intent = getIntent();
 
-        profileId=intent.getStringExtra("publisherId"*/);
+  //  Intent intent = getIntent();
+        SharedPreferences prefs=getContext().getSharedPreferences("PREFS",Context.MODE_PRIVATE);
+
+
+      //  profileId=intent.getStringExtra("publisherId");
+      //  Bundle bundle = this.getArguments();
+
+
+       profileId =prefs.getString("publisher", "none");
+//       profileId = getArguments().getString("publisher");
 
         imageProfile = view.findViewById(R.id.profile_image);
         //options = view.findViewById(R.id.options);
@@ -107,7 +119,7 @@ public class ProfileFragment extends Fragment {
         getFollowersAndFollowingCount();
         getPostCount();
 readPosts();
-
+     //   Log.e("ninini", profileId);
         if (profileId.equals(fUser.getUid())) {
             editProfile.setText("Edit profile");
         } else {
@@ -311,6 +323,14 @@ return view;
             }
         });
 
+    }
+
+    public static ProfileFragment newInstance(String busName) {
+        ProfileFragment yourFragment = new ProfileFragment();
+        Bundle args = new Bundle();
+        args.putString("publisherId", busName);
+        yourFragment.setArguments(args);
+        return yourFragment;
     }
 
 

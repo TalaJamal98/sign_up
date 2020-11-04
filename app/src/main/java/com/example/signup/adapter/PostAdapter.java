@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.util.Date;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,12 +19,16 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.signup.CommentActivity;
 import com.example.signup.FollowerActivity;
+import com.example.signup.Fragment.HomeFragment;
 import com.example.signup.Fragment.PostDetailesFragment;
 import com.example.signup.Fragment.ProfileFragment;
 import com.example.signup.MainActivity;
@@ -141,29 +146,62 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
         holder.username.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Fragment fragment = new ProfileFragment();
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                SharedPreferences.Editor editor=mContext.getSharedPreferences("PREFS",mContext.MODE_PRIVATE).edit();
+
+                editor.putString("publisher", post.getPublisher());
+                editor.apply();
+                ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProfileFragment()).commit();
+
+/*
                 Intent intent = new Intent(mContext, ProfileFragment.class);
                 intent.putExtra("publisherId", post.getPublisher());
-                mContext.startActivity(intent);
+                mContext.startActivity(intent);*/
             }
         });
 
         holder.imageProfile.setOnClickListener(new View.OnClickListener() {
             @Override
+            public void onClick(View view) {
+                Log.e("ninino", post.getPublisher()+"hi");
+
+
+                Fragment fragment = new ProfileFragment();
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                SharedPreferences.Editor editor=mContext.getSharedPreferences("PREFS",mContext.MODE_PRIVATE).edit();
+
+                editor.putString("publisher", post.getPublisher());
+editor.apply();
+                ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProfileFragment()).commit();
+
+               /* Bundle bundle = new Bundle();
+                bundle.putString("publisherId", post.getPublisher()); //key and value
+                fragment.setArguments(bundle);
+                fragmentTransaction.replace(R.id.fragment_container, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();*/
+            }
+        });
+
+     /*   holder.imageProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("key", "value");
+                Fragment fc= new ProfileFragment();
+                fc.setArguments(bundle);
 
-/*
-
-                Fragment fragmentB=new Fragment();
-                Bundle bundle=new Bundle();
-                bundle.putString("publisherId",post.getPublisher());
-                fragmentB.setArguments(bundle);
-*/
 
                 Intent intent = new Intent(mContext, ProfileFragment.class);
                 intent.putExtra("publisherId", post.getPublisher());
                 mContext.startActivity(intent);
             }
-        });
+        });*/
 
         holder.comment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,6 +216,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
         holder.noOfComments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("ninino", post.getPublisher()+"hi");
+
                 Intent intent = new Intent(mContext, CommentActivity.class);
                 intent.putExtra("postId", post.getPostid());
                 intent.putExtra("authorId", post.getPublisher());
@@ -208,7 +248,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
             }
         });*/
 
-        holder.imageProfile.setOnClickListener(new View.OnClickListener() {
+       /* holder.imageProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mContext.getSharedPreferences("PROFILE", Context.MODE_PRIVATE)
@@ -217,7 +257,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
                 ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, new ProfileFragment()).commit();
             }
-        });
+        });*/
 
         holder.username.setOnClickListener(new View.OnClickListener() {
             @Override
