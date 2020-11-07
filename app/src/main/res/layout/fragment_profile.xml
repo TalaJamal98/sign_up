@@ -530,7 +530,7 @@
 
     <LinearLayout
         android:id="@+id/buttons"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="7dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/tags"
@@ -558,7 +558,41 @@
     </LinearLayout>
 
 
-            <LinearLayout
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                app:tabIndicatorColor="@color/yellow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="About Me" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Posts" />
+
+
+            </com.google.android.material.tabs.TabLayout>
+<ScrollView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewpagerid"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+                android:layout_marginBottom="120dp"/>
+</ScrollView>
+          <!--  <LinearLayout
                 app:layout_constraintTop_toBottomOf="@+id/buttons"
 
                 android:layout_width="match_parent"
@@ -577,7 +611,7 @@
                     android:layout_marginBottom="5dp"
                     android:id="@+id/recycler_view_posts"/>
 
-            </LinearLayout>
+            </LinearLayout>-->
         </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 

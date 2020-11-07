@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".Fragment.AboutFragment"
+    android:background="@color/white"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp"
+android:layout_marginHorizontal="30dp"
+        >
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:background="@drawable/rounded_corner">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/baloo"
+                android:textSize="15sp"
+                android:text="City" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/loc_icom"
+                    ></ImageView>
+
+                <TextView
+                    android:id="@+id/city"
+                    android:layout_marginTop="1dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nablus"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"></TextView>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:background="@drawable/rounded_corner">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/baloo"
+                android:textSize="15sp"
+                android:text="Birthdate" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/birth_icom"
+                    ></ImageView>
+
+                <TextView
+                    android:id="@+id/birth"
+                    android:layout_marginTop="1dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="21-10-1998"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"></TextView>
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+
+        android:orientation="vertical"
+        android:padding="10dp"
+android:background="@drawable/rounded_corner">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/baloo"
+            android:textSize="15sp"
+            android:text="Phone" />
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+<ImageView
+    android:layout_width="25dp"
+    android:layout_height="25dp"
+    android:src="@drawable/ph_icom"
+    ></ImageView>
+
+        <TextView
+            android:layout_marginTop="1dp"
+android:id="@+id/phoneNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0597576210"
+            android:textColor="@color/black"
+            android:textSize="15sp"></TextView>
+    </LinearLayout>
+    </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:background="@drawable/rounded_corner">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/baloo"
+                android:textSize="15sp"
+                android:text="E-mail" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/mail_icom"
+                    ></ImageView>
+
+                <TextView
+                    android:id="@+id/email"
+                    android:layout_marginTop="1dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ruba.badawi98@gmail.com"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"></TextView>
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="100dp"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:background="@drawable/rounded_corner">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/baloo"
+                android:textSize="15sp"
+                android:text="About Me" />
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/per_icom"
+                    ></ImageView>
+
+                <TextView
+                    android:id="@+id/about"
+                    android:layout_marginTop="1dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Computer Engineer"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"></TextView>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

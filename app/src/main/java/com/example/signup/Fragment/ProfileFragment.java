@@ -4,14 +4,18 @@ package com.example.signup.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,8 +26,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.signup.ChatAndUserActivity;
 import com.example.signup.EditProfileActivity;
 import com.example.signup.FollowerActivity;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -62,7 +69,11 @@ public class ProfileFragment extends Fragment {
     private List<Post> postList;
    // private TextView fullname;
     //private TextView bio;
+    private TextView city;
+
     private TextView username;
+    private TabLayout tabLayout ;
+   private  ViewPager2 viewPager2 ;
 
     private Button editProfile;
 
@@ -100,25 +111,48 @@ public class ProfileFragment extends Fragment {
         postsno = view.findViewById(R.id.postsNum);
         //fullname = view.findViewById(R.id.fullname);
         //bio = view.findViewById(R.id.bio);
+        tabLayout = view.findViewById(R.id.tabLayout);
+        viewPager2 = view.findViewById(R.id.viewpagerid);
+        tabLayout.setTabTextColors(Color.parseColor("#727272"), Color.parseColor("#f2c40d"));
+        username = view.findViewById(R.id.city);
+
         username = view.findViewById(R.id.user_name);
       //  myPictures = view.findViewById(R.id.my_pictures);
        // savedPictures = view.findViewById(R.id.saved_pictures);
         editProfile = view.findViewById(R.id.edit_profile);
+        viewPager2.setAdapter(new Customadapter(this));
+        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(
+                tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
+            @Override
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                switch (position)
+                {
+                    case 0:
+                        tab.setText("About Me");
+                        break;
+                    case 1:
+                        tab.setText("Posts");
+                        break;
 
-        recyclerViewPosts = view.findViewById(R.id.recycler_view_posts);
+                }
+            }
+        }
+        );
+        tabLayoutMediator.attach();
+   /*     recyclerViewPosts = view.findViewById(R.id.recycler_view_posts);
         recyclerViewPosts.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setStackFromEnd(true);
         linearLayoutManager.setReverseLayout(true);
-        recyclerViewPosts.setLayoutManager(linearLayoutManager);
-        postList = new ArrayList<>();
+        recyclerViewPosts.setLayoutManager(linearLayoutManager);*/
+      /*  postList = new ArrayList<>();
         postAdapter = new PostAdapter(getContext(), postList);
-        recyclerViewPosts.setAdapter(postAdapter);
+        recyclerViewPosts.setAdapter(postAdapter);*/
 
         userInfo();
         getFollowersAndFollowingCount();
         getPostCount();
-readPosts();
+//readPosts();
      //   Log.e("ninini", profileId);
         if (profileId.equals(fUser.getUid())) {
             editProfile.setText("Edit profile");
@@ -216,7 +250,7 @@ return view;
     }
 
 
-    private void readPosts() {
+    /*private void readPosts() {
 
         FirebaseDatabase.getInstance().getReference().child("Posts").addValueEventListener(new ValueEventListener() {
             @Override
@@ -241,7 +275,7 @@ return view;
             }
         });
 
-    }
+    }*/
 
     private void getPostCount() {
 
@@ -328,10 +362,51 @@ return view;
     public static ProfileFragment newInstance(String busName) {
         ProfileFragment yourFragment = new ProfileFragment();
         Bundle args = new Bundle();
-        args.putString("publisherId", busName);
+        args.putString("profileid", busName);
+
         yourFragment.setArguments(args);
         return yourFragment;
     }
 
 
+    public class Customadapter extends FragmentStateAdapter {
+
+        public Customadapter(@NonNull ProfileFragment fragmentActivity) {
+            super(fragmentActivity);
+        }
+
+        @NonNull
+        @Override
+        public Fragment createFragment(int position) {
+            switch (position)
+            {
+                case 0:
+                    Bundle bundle1 = new Bundle();
+
+
+                    bundle1.putString("profileid", profileId);
+
+                    AboutFragment mFragment_B1 = new AboutFragment();
+                    mFragment_B1.setArguments(bundle1);
+                    return mFragment_B1;
+
+                case 1:
+
+                    Bundle bundle = new Bundle();
+
+
+                    bundle.putString("profileid", profileId);
+
+                    ProfilePostsFragment mFragment_B = new ProfilePostsFragment();
+                    mFragment_B.setArguments(bundle);
+                    return mFragment_B;
+            }
+            return null;
+        }
+
+        @Override
+        public int getItemCount() {
+            return 2;
+        }
+    }
 }
