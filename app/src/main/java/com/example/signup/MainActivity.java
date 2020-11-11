@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.signup.Fragment.FilterFragment;
@@ -29,11 +31,15 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout dl;
     private ActionBarDrawerToggle adt;
 
+private Button a;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         dl=(DrawerLayout)findViewById(R.id.drawer);
         adt= new ActionBarDrawerToggle(this, dl, R.string.open,R.string.close);
@@ -44,6 +50,15 @@ public class MainActivity extends AppCompatActivity {
 
         nav_view = (NavigationView)findViewById(R.id.nav);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        a=(Button) findViewById(R.id.create);
+        a.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i= new Intent(MainActivity.this, createEvent.class);
+                startActivity(i);
+            }
+        });
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

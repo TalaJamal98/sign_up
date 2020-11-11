@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.signup.ChatAndUserActivity;
+
+import com.example.signup.Model.auction;
 import com.example.signup.adapter.AuctionAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -35,6 +37,7 @@ public class HomeFragment extends Fragment {
     private AuctionAdapter auctionAdapter;
 
     private List<Post> postList;
+    private List<auction> auctionList;
     private RecyclerView recyclerViewAuction;
 
     private List<String> followingList;
@@ -60,8 +63,9 @@ chat=view.findViewById(R.id.chat);
         recyclerViewAuction.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         postList = new ArrayList<>();
+        auctionList=new ArrayList<>();
         postAdapter = new PostAdapter(getContext(), postList);
-        auctionAdapter = new AuctionAdapter(getContext(), postList);
+        auctionAdapter = new AuctionAdapter(getContext(), auctionList);
 
         recyclerViewPosts.setAdapter(postAdapter);
         recyclerViewAuction.setAdapter(auctionAdapter);
@@ -136,21 +140,22 @@ chat=view.findViewById(R.id.chat);
 
     private void readAuction() {
 
-        FirebaseDatabase.getInstance().getReference().child("Posts").addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("Auctions").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                postList.clear();
+                auctionList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Post post = snapshot.getValue(Post.class);
+                    auction auction1 = snapshot.getValue(auction.class);
 
                     for (String id : followingList) {
-                        if (post.getPublisher().equals(id)) {
-                            postList.add(post);
+                        if (auction1.getPublisher().equals(id)) {
+                            auctionList.add(auction1);
                         }
                     }
                 }
                 auctionAdapter.notifyDataSetChanged();
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

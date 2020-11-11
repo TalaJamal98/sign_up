@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/yellow_border"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:id="@+id/product"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/cactus"
+            tools:ignore="MissingConstraints"></ImageView>
+
+        <LinearLayout
+            android:layout_width="245dp"
+            android:layout_height="150dp"
+            android:layout_toRightOf="@id/product"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/border"
+            android:orientation="vertical"
+            >
+
+
+            <TextView
+                android:id="@+id/productName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="product's name: "
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"></TextView>
+
+            <TextView
+                android:id="@+id/timeRemaining"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time remaining: "
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"></TextView>
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date: "
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"></TextView>
+            <TextView
+                android:id="@+id/higherPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Higher Price: "
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"></TextView>
+
+            <TextView
+                android:id="@+id/customer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Purchaser: "
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"></TextView>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

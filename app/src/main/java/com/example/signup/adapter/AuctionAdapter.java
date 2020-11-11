@@ -1,152 +1,107 @@
 package com.example.signup.adapter;
 
-
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.signup.CommentActivity;
-import com.example.signup.FollowerActivity;
-import com.example.signup.Fragment.PostDetailesFragment;
-import com.example.signup.Fragment.ProfileFragment;
-import com.example.signup.MainActivity;
+import com.example.signup.Model.Notification;
+import com.example.signup.Model.User;
+import com.example.signup.Model.auction;
+import com.example.signup.R;
+import com.example.signup.event;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.hendraanggrian.appcompat.widget.SocialTextView;
-
-import com.example.signup.Model.Post;
-import com.example.signup.Model.User;
-import com.example.signup.R;
 import com.squareup.picasso.Picasso;
 
-import java.util.HashMap;
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class AuctionAdapter extends RecyclerView.Adapter<AuctionAdapter.Viewholder> {
+public class AuctionAdapter extends RecyclerView.Adapter<AuctionAdapter.viewholder>{
 
     private Context mContext;
-    private List<Post> mPosts;
+    private List<auction> mauction;
 
     private FirebaseUser firebaseUser;
 
-    public AuctionAdapter(Context mContext, List<Post> mPosts) {
+    public AuctionAdapter(Context mContext, List<auction> mauction) {
         this.mContext = mContext;
-        this.mPosts = mPosts;
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        this.mauction = mauction;
     }
 
     @NonNull
     @Override
-    public Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.auction_item, parent, false);
-        return new AuctionAdapter.Viewholder(view);
+    public viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.auction_item,parent,false);
+        return new AuctionAdapter.viewholder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final Viewholder holder, int position) {
+    public void onBindViewHolder(@NonNull final viewholder holder, int position) {
+        firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
+        final auction auctionn =mauction.get(position);
 
-        final Post post = mPosts.get(position);
-        Picasso.get().load(post.getImageurl()).into(holder.postImage);
-        // holder.description.setText(post.getDescription());
+        holder.cat.setText(auctionn.getCategory());
 
-        FirebaseDatabase.getInstance().getReference().child("users").child(post.getPublisher()).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("users").child(auctionn.getPublisher()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
 
-                if(user!=null) {
-                    Log.e("err",user.getId());
+                holder.name.setText(user.getFirstname()+user.getSecondname());
 
-                    if (user.getProfilepic()==null || user.getProfilepic().equals("")) {
-                        // Log.e("err",user.getProfile_pic());
-
-                        holder.postImage.setImageResource(R.mipmap.ic_launcher);
-                    } else {
-                        Picasso.get().load(user.getProfilepic()).into(holder.postImage);
+                holder.name.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i= new Intent(mContext, event.class);
+                        i.putExtra("myid",auctionn.getAuctionId());
+                        mContext.startActivity(i);
 
                     }
+                });
 
-                    holder.author.setText(user.getFirstname());
-                    holder.prodName.setText(post.getName());
-
-
-                }
-                else{
-                    Log.v("no",post.getPublisher());
-
-                    Log.v("no","no user");
-                }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-
-
-
-
-
-   /*     holder.save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (holder.save.getTag().equals("save")) {
-                    FirebaseDatabase.getInstance().getReference().child("Saves")
-                            .child(firebaseUser.getUid()).child(post.getPostid()).setValue(true);
-                } else {
-                    FirebaseDatabase.getInstance().getReference().child("Saves")
-                            .child(firebaseUser.getUid()).child(post.getPostid()).removeValue();
-                }
-            }
-        });*/
-
-
     }
+
+
 
     @Override
     public int getItemCount() {
-        return mPosts.size();
+     return mauction.size();
+       // return 0;
+
     }
 
-    public class Viewholder extends RecyclerView.ViewHolder {
-        public ImageView postImage;
-        public TextView author;
-        public TextView prodName;
 
+    public class  viewholder extends RecyclerView.ViewHolder{
+        public ImageView profile;
+        public TextView name;
+        public TextView cat;
 
-
-
-
-        public Viewholder(@NonNull View itemView) {
+        public viewholder(@NonNull View itemView) {
             super(itemView);
 
-            postImage = itemView.findViewById(R.id.auction_image);
-            author = itemView.findViewById(R.id.name);
-            prodName = itemView.findViewById(R.id.prod);
-
-
+            profile= itemView.findViewById(R.id.auction_image);
+            name=itemView.findViewById(R.id.name);
+            cat=itemView.findViewById(R.id.prod);
         }
     }
-
-
 
 
 
