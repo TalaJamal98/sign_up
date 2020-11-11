@@ -1,5 +1,6 @@
 package com.example.signup;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -27,6 +28,7 @@ public class createEvent extends AppCompatActivity {
     private long left;
     long num;
     String full;
+    String myname, mycat,mydesc,myprice,mytime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,18 +44,21 @@ public class createEvent extends AppCompatActivity {
         Mydate=findViewById(R.id.datee);
         donee=findViewById(R.id.done);
 
-        Intent intent =getIntent();
+       // Intent intent =getIntent();
+        // full = intent.getStringExtra("full");
 
-         full = intent.getStringExtra("full");
 
-        donee.setText("Your auction will be held on "+ full);
 
 
         Mydate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(createEvent.this, Calender.class);
-                startActivity(i);
+                startActivityForResult(i,1);
+                donee.setText("Your auction will be held on "+ full);
+
+
+
             }
         });
 
@@ -70,13 +75,25 @@ public class createEvent extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==RESULT_OK && requestCode==1){
+            if(data.hasExtra("full")){
+                full = data.getStringExtra("full");
+            }
+
+        }
+    }
+
     public void createEvent(){
-        String myname=name.getText().toString();
-        String mydesc=desc.getText().toString();
-        String mycat=cat.getText().toString();
-        String myprice=price.getText().toString();
-        String mytime=time.getText().toString();
-        String mydate=donee.getText().toString();
+         myname=name.getText().toString();
+         mydesc=desc.getText().toString();
+         mycat=cat.getText().toString();
+         myprice=price.getText().toString();
+         mytime=time.getText().toString();
+         String mydate=donee.getText().toString();
 
      /*   int h= Integer.parseInt(mytime);
         int m= h*60;
