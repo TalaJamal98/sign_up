@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"ئء
         app:layout_constraintEnd_toEndOf="parent"
 
         >
@@ -109,20 +109,20 @@
                                     android:src="@drawable/logo" />
                 -->
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="left"
-                    android:src="@drawable/arrow"
+                    android:src="@drawable/back"
                     android:layout_alignParentStart="true"
                     ></ImageView>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="My profile"
-                    android:textSize="15sp"
+                    android:textSize="20sp"
                     android:layout_gravity="center"
                     android:id="@+id/toolbar_title"
-                    android:fontFamily="sans-serif-black"
+                    android:layout_marginTop="10dp"
                     android:textColor="#737373"
                     android:layout_centerHorizontal="true"
 
@@ -130,8 +130,9 @@
 
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="40dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_height="40dp"
                     android:src="@drawable/chat1"
                     android:layout_gravity="right"
                     android:layout_marginRight="15dp"

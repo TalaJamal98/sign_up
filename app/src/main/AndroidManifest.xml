@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Calender"></activity>
+        <activity android:name=".StartActivity"></activity>
+        <activity android:name=".resetPass" />
+        <activity android:name=".Calender" />
         <activity android:name=".myAuctions" />
         <activity android:name=".createEvent" />
         <activity android:name=".event" />
@@ -31,7 +33,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".sign_up" />
         <activity android:name=".sign_in" />
-        <activity android:name=".StartActivity">
+        <activity android:name=".splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

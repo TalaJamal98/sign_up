@@ -42,6 +42,7 @@ public class sign_in extends AppCompatActivity {
     private DatabaseReference mDatabase;
     FirebaseAuth mAuth;
     boolean checker;
+    private TextView reset;
 
     private void emailCheck(){
 
@@ -71,6 +72,16 @@ public class sign_in extends AppCompatActivity {
         passwordLogin=findViewById(R.id.passwordLog);
         LogBtn=findViewById(R.id.loginBtn);
         mAuth = FirebaseAuth.getInstance();
+        reset= findViewById(R.id.reset);
+
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent k = new Intent(sign_in.this, resetPass.class);
+                startActivity(k);
+                finish();
+            }
+        });
 
         signInText.setOnClickListener(new View.OnClickListener() {
             @Override

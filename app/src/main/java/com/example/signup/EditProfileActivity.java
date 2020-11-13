@@ -68,7 +68,7 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
-        blurImageView =findViewById(R.id.bluring_image);
+
         close = findViewById(R.id.close);
         imageProfile = findViewById(R.id.profile_image);
         back = findViewById(R.id.back);
