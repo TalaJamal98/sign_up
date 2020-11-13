@@ -58,7 +58,7 @@ public class AuctionAdapter extends RecyclerView.Adapter<AuctionAdapter.viewhold
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
 
-                holder.name.setText(user.getFirstname()+user.getSecondname());
+                holder.name.setText(user.getFirstname()+" "+user.getSecondname());
 
                 holder.name.setOnClickListener(new View.OnClickListener() {
                     @Override

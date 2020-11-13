@@ -3,43 +3,56 @@
     android:layout_width="100dp"
     android:layout_height="match_parent"
     android:id="@+id/linear_layout"
-android:layout_marginTop="20dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:background="@drawable/rv_auction"
+
     android:orientation="vertical"
-    android:elevation="2dp"
+
 
     >
 
-
-        <ImageView
-            android:id="@+id/auction_image"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/logo"
-android:layout_gravity="center"
-            ></ImageView>
-
-
-        <TextView
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/name"
-            android:text="Ruba"
-            android:layout_gravity="center"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            />
-<TextView
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+
+            android:background="@drawable/yellow_circle"
+            android:padding="20dp"
+            >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/auction_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/logo"
+android:layout_gravity="center"
+            ></de.hdodenhof.circleimageview.CircleImageView>
+
+        </FrameLayout>
+<LinearLayout
+
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/prod"
-    android:text="Shoes"
-    android:layout_gravity="center"
-android:textSize="14sp"
-    />
+    android:orientation="vertical"
+
+    >
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Ruba"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/prod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"
+            android:text="Shoes "
+            android:textSize="14sp" />
+</LinearLayout>
 
 </LinearLayout>
 

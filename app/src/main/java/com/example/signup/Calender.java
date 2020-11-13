@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -67,10 +68,12 @@ public class Calender extends AppCompatActivity {
                 startActivity(i);*/
 
                Intent data = new Intent();
-                data.putExtra("year", myyear);
-                data.putExtra("month", mymonth);
-                data.putExtra("day", myday);
+               // data.putExtra("year", myyear);
+            //    data.putExtra("month", mymonth);
+             //   data.putExtra("day", myday);
                 data.putExtra("full",date);
+                Log.e("hhh", date);
+                setResult(RESULT_OK, data);
                 finish();
 
 

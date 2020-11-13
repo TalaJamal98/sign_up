@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -55,7 +57,6 @@ public class createEvent extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(createEvent.this, Calender.class);
                 startActivityForResult(i,1);
-                donee.setText("Your auction will be held on "+ full);
 
 
 
@@ -79,11 +80,17 @@ public class createEvent extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==RESULT_OK && requestCode==1){
+        if(resultCode==RESULT_OK && requestCode==1){
             if(data.hasExtra("full")){
+                Log.e("bb",data.getStringExtra("full"));
                 full = data.getStringExtra("full");
+                donee.setText("Your auction will be held on "+ full);
+
             }
 
+        }else{
+            Toast.makeText(createEvent.this, "error"+ full,
+                    Toast.LENGTH_SHORT).show();
         }
     }
 

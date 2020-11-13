@@ -51,6 +51,9 @@ public class event extends AppCompatActivity {
     long num;
     boolean isRunning;
     private long mEndTime;
+    int curDay,curMonth,curYear;
+    int cyear,cmonth,cday;
+    private ImageView back;
 
 
 
@@ -60,7 +63,7 @@ public class event extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
 
-
+        back=findViewById(R.id.back);
         pname=findViewById(R.id.name);
         pdes=findViewById(R.id.des);
         pcat=findViewById(R.id.cat);
@@ -70,17 +73,25 @@ public class event extends AppCompatActivity {
         pup=findViewById(R.id.moree);
         auctionDate=findViewById(R.id.auDate);
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i= new Intent (event.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
+
         Calendar calender= Calendar.getInstance();
         String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calender.getTime());
-        final int curYear = calender.get(Calendar.YEAR);
-        final int curMonth = calender.get(Calendar.MONTH)+1;
-        final int curDay= calender.get(Calendar.DAY_OF_MONTH);
+         curYear = calender.get(Calendar.YEAR);
+         curMonth = calender.get(Calendar.MONTH);
+         curDay= calender.get(Calendar.DAY_OF_MONTH);
 
-        Toast.makeText(event.this, "day "+ curDay,
+        Toast.makeText(event.this, "curday "+ curDay,
                 Toast.LENGTH_SHORT).show();
-        Toast.makeText(event.this, "today is "+ curMonth,
+        Toast.makeText(event.this, " curmonth "+ curMonth,
                 Toast.LENGTH_SHORT).show();
-        Toast.makeText(event.this, "today is "+ curYear,
+        Toast.makeText(event.this, " curyear "+ curYear,
                 Toast.LENGTH_SHORT).show();
 
 
@@ -99,7 +110,7 @@ public class event extends AppCompatActivity {
                     pdes.setText(pdes.getText()+" "+user.getDescription());
                     pprice.setText(user.getPrice());
                     auctionDate.setText(user.getDate());
-                   // ptime.setText(user.getTime());
+                    ptime.setText(user.getTime());
 
 
                    String something= user.getTime().toString();
@@ -107,45 +118,45 @@ public class event extends AppCompatActivity {
                     int m= h*60;
                     int s= m*60;
                     int ms=s*1000;
-
                     num = (long)ms;
 
 
                     full=user.getDate();
 
-                    String[] separated = full.split("/");
-                   int cyear= Integer.parseInt(separated[2]);
-                    int cmonth= Integer.parseInt(separated[1]);
-                    int cday= Integer.parseInt(separated[0]);
+                    String[] separated = auctionDate.getText().toString().split("/");
+                    cyear= Integer.parseInt(separated[2]);
+                     cmonth= Integer.parseInt(separated[1]);
+                     cday= Integer.parseInt(separated[0]);
 
-                    Toast.makeText(event.this, "today is "+ cday,
+                    Toast.makeText(event.this, "auction day "+ cday,
                             Toast.LENGTH_SHORT).show();
-                    Toast.makeText(event.this, "today is "+ cmonth,
+                    Toast.makeText(event.this, "auction month "+ cmonth,
                             Toast.LENGTH_SHORT).show();
-                    Toast.makeText(event.this, "today is "+ cyear,
+                    Toast.makeText(event.this, "auction year "+ cyear,
                             Toast.LENGTH_SHORT).show();
 
                     if(curDay==cday && curMonth==cmonth && curYear==cyear){
                         pup.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                if(isRunning) {
 
-                                String newprice= pprice.getText().toString();
-                                int finalprice=  Integer.valueOf(newprice);
+                                    String newprice = pprice.getText().toString();
+                                    int finalprice = Integer.valueOf(newprice);
 
-                                finalprice=finalprice+10;
-                                String finall =Integer.toString(finalprice);
-                                pprice.setText(finall);
+                                    finalprice = finalprice + 10;
+                                    String finall = Integer.toString(finalprice);
+                                    pprice.setText(finall);
+                                }
 
                             }
 
 
                         });
 
-
-                        onStart();
-                        //start();
-                        update();
+                        start();
+                        //onStart();
+                        //update();
                         Toast.makeText(event.this, "year:  "+ cyear,
                                 Toast.LENGTH_SHORT).show();
                     }else
@@ -179,32 +190,7 @@ public class event extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        num=prefs.getLong("millisleft", num);
-        isRunning=prefs.getBoolean("timerRunning", false);
-        update();
-
-        if(isRunning){
-        mEndTime=prefs.getLong("endTime", 0);
-        num=mEndTime-System.currentTimeMillis();
-
-        if(num<0){
-    num=0;
-    isRunning=false;
-    update();
-        }else {
-    start();
-
-        }
-
-        }
-
-    }
-
-    @Override
+/*    @Override
     protected void onStop() {
         super.onStop();
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
@@ -217,24 +203,56 @@ public class event extends AppCompatActivity {
 
     }
 
+
+    @Override
+    protected void onStart() {
+            super.onStart();
+
+            SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+            num = prefs.getLong("millisleft", num);
+            isRunning = prefs.getBoolean("timerRunning", false);
+            update();
+
+            if (isRunning) {
+                mEndTime = prefs.getLong("endTime", 0);
+                num = mEndTime - System.currentTimeMillis();
+
+                if (num < 0) {
+                    num = 0;
+                    isRunning = false;
+                    update();
+                } else {
+                    start();
+
+                }
+
+            }
+
+
+    }*/
+
+
+
     public void start(){
-        mEndTime = System.currentTimeMillis() + num;
-        timer = new CountDownTimer(num, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                isRunning=true;
-                num=millisUntilFinished;
-                update();
 
-            }
+            mEndTime = System.currentTimeMillis() + num;
+            timer = new CountDownTimer(num, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    isRunning = true;
+                    num = millisUntilFinished;
+                    update();
 
-            @Override
-            public void onFinish() {
-                isRunning=false;
-                timer.cancel();
+                }
 
-            }
-        }.start();
+                @Override
+                public void onFinish() {
+                    isRunning = false;
+                    timer.cancel();
+
+                }
+            }.start();
+
 
     }
 
@@ -254,11 +272,6 @@ public class event extends AppCompatActivity {
 
 
         ptime.setText(timetext);
-    }
-
-    public void checkDate(){
-        Calendar calender = Calendar.getInstance();
-
     }
 
 }
