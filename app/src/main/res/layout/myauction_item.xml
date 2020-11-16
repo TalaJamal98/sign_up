@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,59 +19,135 @@
             android:id="@+id/product"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="15dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp"
             android:src="@drawable/cactus"
             tools:ignore="MissingConstraints"></ImageView>
 
         <LinearLayout
             android:layout_width="245dp"
             android:layout_height="150dp"
-            android:layout_toRightOf="@id/product"
-            android:layout_marginLeft="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginHorizontal="10dp"
             android:layout_marginTop="25dp"
+            android:layout_marginBottom="25dp"
+            android:layout_toRightOf="@id/product"
             android:background="@drawable/border"
-            android:orientation="vertical"
+            android:orientation="vertical">
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/productNameLa"
+    android:layout_marginLeft="8dp"
+    android:layout_marginTop="8dp"
+    android:orientation="horizontal"
+    >
+    <TextView
+        android:id="@+id/productName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="product's name: "></TextView>
+    <TextView
+    android:id="@+id/Name"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+android:textStyle="bold"
+    android:text="product's name "></TextView>
+</LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/timeLa"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
             >
-
-
-            <TextView
-                android:id="@+id/productName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="product's name: "
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="8dp"></TextView>
 
             <TextView
                 android:id="@+id/timeRemaining"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Time remaining: "
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="8dp"></TextView>
+                android:text="Time remaining: "></TextView>
             <TextView
-                android:id="@+id/date"
+                android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date: "
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="8dp"></TextView>
+                android:textStyle="bold"
+                android:text="product's name "></TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dateLa"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/date1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date: "></TextView>
+            <TextView
+            android:id="@+id/date"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date: "></TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/priceLa"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            >
             <TextView
                 android:id="@+id/higherPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Higher Price: "
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="8dp"></TextView>
-
+                android:text="Higher Price: "></TextView>
             <TextView
-                android:id="@+id/customer"
+                android:id="@+id/price"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Purchaser: "
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="8dp"></TextView>
+                android:text="Date: "></TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cusLa"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/customer1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Purchaser: "></TextView>
+            <TextView
+                android:id="@+id/customer"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Purchaser: "></TextView>
+
+        </LinearLayout>
 
         </LinearLayout>
 

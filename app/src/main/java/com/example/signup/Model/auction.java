@@ -1,29 +1,50 @@
 package com.example.signup.Model;
 
 public class auction {
-
+    private String imageurl;
+private String buyer;
     private String name;
     private String category;
     private String price;
-    private String time;
+    private String startTime;
+    private String endTime;
     private String date;
     private String Publisher;
     private String description;
     private String AuctionId;
+    public auction(){
 
-    public auction(String name, String category, String price, String time, String date, String publisher, String description, String auctionId) {
+    }
+
+    public auction(String imageurl, String buyer, String name, String category, String price, String startTime, String endTime, String date, String publisher, String description, String auctionId) {
+        this.imageurl = imageurl;
+        this.buyer = buyer;
         this.name = name;
         this.category = category;
         this.price = price;
-        this.time = time;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.date = date;
         Publisher = publisher;
         this.description = description;
         AuctionId = auctionId;
     }
 
-    public auction(){
 
+    public String getImageurl() {
+        return imageurl;
+    }
+
+    public void setImageurl(String imageurl) {
+        this.imageurl = imageurl;
+    }
+
+    public String getBuyer() {
+        return buyer;
+    }
+
+    public void setBuyer(String buyer) {
+        this.buyer = buyer;
     }
 
     public String getName() {
@@ -50,12 +71,20 @@ public class auction {
         this.price = price;
     }
 
-    public String getTime() {
-        return time;
+    public String getStartTime() {
+        return startTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 
     public String getDate() {

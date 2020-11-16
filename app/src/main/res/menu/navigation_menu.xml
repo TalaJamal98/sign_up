@@ -17,15 +17,21 @@
 
       <item
           android:id="@+id/events"
-          android:title="Events"
+          android:title="My Auctions"
           android:icon="@drawable/event_icom"
           />
 
-      <item
-          android:id="@+id/map"
-          android:title="Map"
-          android:icon="@drawable/map_icom"
-          />
+    <item
+        android:id="@+id/map"
+        android:title="Map"
+        android:icon="@drawable/map_icom"
+        />
+
+    <item
+        android:id="@+id/filter"
+        android:title="Filter"
+        android:icon="@drawable/filter_icom"
+        />
    </group>
 
    <item android:title="Logout">

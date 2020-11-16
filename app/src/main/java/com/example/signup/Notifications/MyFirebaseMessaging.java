@@ -31,7 +31,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         String st = data_notify.get("sented");
         //String sented = remoteMessage.getData().get("sented");
         Log.e("no", data_notify.toString());
-        Log.e("no", st);
+        //Log.e("no", st);
         String user = data_notify.get("user");
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();

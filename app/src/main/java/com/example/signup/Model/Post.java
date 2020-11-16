@@ -13,12 +13,10 @@ public class Post {
     private String price;
     private String category;
     private String time;
+    private String color;
 
 
-    public Post() {
-    }
-
-    public Post(String description, String imageurl, String postid, String publisher, String name, String size, String price, String category,String time) {
+    public Post(String description, String imageurl, String postid, String publisher, String name, String size, String price, String category, String time, String color) {
         this.description = description;
         this.imageurl = imageurl;
         this.postid = postid;
@@ -27,8 +25,22 @@ public class Post {
         this.size = size;
         this.price = price;
         this.category = category;
-        this.time=time;
+        this.time = time;
+        this.color = color;
     }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public Post() {
+    }
+
+
 
     public String getTime() {
         return time;

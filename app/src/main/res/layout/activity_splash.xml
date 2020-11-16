@@ -13,8 +13,10 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:src="@drawable/logo5"
-        tools:layout_editor_absoluteX="105dp"
-        tools:layout_editor_absoluteY="211dp"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints"></ImageView>
 
     <TextView
@@ -25,21 +27,26 @@
         android:fontFamily="sans-serif-condensed-medium"
         android:text="BUY IT BACK"
         android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pic"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="140dp"></TextView>
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    app:layout_constraintBottom_toBottomOf="@id/layout">
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="150dp"
-        android:src="@drawable/pic1"
+        tools:ignore="MissingConstraints"></TextView>
 
-        tools:ignore="MissingConstraints"></ImageView>
-</RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/layout">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:src="@drawable/pic1"
+
+            tools:ignore="MissingConstraints"></ImageView>
+    </RelativeLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

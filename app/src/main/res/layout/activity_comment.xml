@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CommentActivity">
+    tools:context=".CommentActivity"
+    >
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
@@ -23,9 +24,11 @@
         android:id="@+id/bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffffff"
+        android:background="@drawable/darkborder"
         android:layout_alignParentBottom="true"
-        android:padding="5dp">
+        android:padding="5dp"
+        android:layout_margin="5dp"
+        >
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="40dp"

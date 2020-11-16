@@ -1,7 +1,9 @@
 package com.example.signup.Fragment;
 
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -9,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -19,16 +22,25 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.signup.ChatAndUserActivity;
 import com.example.signup.EditProfileActivity;
 import com.example.signup.FollowerActivity;
+import com.example.signup.MessageActivity;
+import com.example.signup.Model.Chat;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
@@ -50,11 +62,13 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.mapbox.mapboxsdk.Mapbox.getApplicationContext;
 
 public class ProfileFragment extends Fragment {
     private TextView followers;
@@ -67,7 +81,15 @@ public class ProfileFragment extends Fragment {
     private RecyclerView recyclerViewPosts;
     private PostAdapter postAdapter;
     private List<Post> postList;
-   // private TextView fullname;
+    DatabaseReference databaseReference ;
+    private List<String> sendlist ;
+    private List<Chat> chatlist ;
+    private List<String> senderlist ;
+    ProgressBar bar;
+    TextView b;
+    ImageView back1;
+    RatingBar ratingBar;
+    // private TextView fullname;
     //private TextView bio;
     private TextView city;
 
@@ -76,8 +98,11 @@ public class ProfileFragment extends Fragment {
    private  ViewPager2 viewPager2 ;
 
     private Button editProfile;
+    private ImageButton send;
+    private ImageButton rate;
 
     private FirebaseUser fUser;
+    ImageView chat;
 
     String profileId;
 
@@ -89,6 +114,13 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         fUser = FirebaseAuth.getInstance().getCurrentUser();
+        chatlist = new ArrayList<>();
+        senderlist = new ArrayList<>();
+        sendlist = new ArrayList<>();
+        b=view.findViewById(R.id.chat_badge);
+        chat=view.findViewById(R.id.chat);
+        back1=view.findViewById(R.id.back);
+        ratingBar=view.findViewById(R.id.ratingBar1);
 
   //  Intent intent = getIntent();
         SharedPreferences prefs=getContext().getSharedPreferences("PREFS",Context.MODE_PRIVATE);
@@ -97,8 +129,11 @@ public class ProfileFragment extends Fragment {
       //  profileId=intent.getStringExtra("publisherId");
       //  Bundle bundle = this.getArguments();
 
+        Bundle bundle = getArguments();
+        profileId =bundle.getString("profileid");
 
-       profileId =prefs.getString("publisher", "none");
+
+      // profileId =prefs.getString("publisher", "none");
 //       profileId = getArguments().getString("publisher");
 
         imageProfile = view.findViewById(R.id.profile_image);
@@ -120,7 +155,102 @@ public class ProfileFragment extends Fragment {
       //  myPictures = view.findViewById(R.id.my_pictures);
        // savedPictures = view.findViewById(R.id.saved_pictures);
         editProfile = view.findViewById(R.id.edit_profile);
-        viewPager2.setAdapter(new Customadapter(this));
+        send = view.findViewById(R.id.send);
+        rate = view.findViewById(R.id.rate);
+        rate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShowDialog();
+
+            }
+        });
+
+
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MessageActivity.class);
+                intent.putExtra("userid", profileId);
+                startActivity(intent);
+
+            }
+        });
+
+
+        fUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Chats");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                chatlist.clear();
+                sendlist.clear();
+                senderlist.clear();
+
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                {
+                    Chat chat = snapshot.getValue(Chat.class);
+                    assert chat != null;
+                    if (chat.getReceiver().equals(fUser.getUid()))
+                    {
+                        //if(!chatlist.contains(chat.getSender()))
+                        sendlist.remove(chat.getSender());
+                        sendlist.add(chat.getSender());
+
+                        chatlist.remove(chat);
+                        chatlist.add(chat);
+
+                    }
+                }
+                for (int j =chatlist.size()-1; j >=0; j--) {
+
+                    if (chatlist.get(j).getSeenstatus().equals("seen")) {
+
+                        chatlist.remove(j);
+                    }
+                }
+
+                for(int i=0;i<sendlist.size();i++) {
+                    for (int j = 0; j < chatlist.size(); j++) {
+
+                        if (chatlist.get(j).getSender().equals(sendlist.get(i))) {
+                            senderlist.remove(sendlist.get(i));
+                            senderlist.add(sendlist.get(i));
+                        }
+                    }
+                }
+                for(int i=0;i<chatlist.size();i++){
+                    Log.e("chat", chatlist.get(i).getMessage()+"" );
+                }
+
+                b.setText(senderlist.size()+"");
+                if(senderlist.size()>0)
+                    b.setVisibility(View.VISIBLE);
+                else
+                    b.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), ChatAndUserActivity.class);
+                startActivity(i);
+                ((Activity) getActivity()).overridePendingTransition(0, 0);
+
+            }
+        });
+
+
+
+                viewPager2.setAdapter(new Customadapter(this));
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(
                 tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
@@ -138,6 +268,34 @@ public class ProfileFragment extends Fragment {
             }
         }
         );
+
+
+        back1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getFragmentManager().popBackStack();
+            }
+        });
+        FirebaseDatabase.getInstance().getReference().child("ratings").child(profileId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                final double[] rateVal = {0};
+                int count=0;
+
+                for(DataSnapshot rating:snapshot.getChildren()){
+                    Log.e("rate", rating.child("rateValue").getValue()+"" );
+                    rateVal[0] = rateVal[0] +(double)rating.child("rateValue").getValue();
+                    count++;
+                }
+                if(count>0)
+                ratingBar.setRating((float)rateVal[0]/count);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         tabLayoutMediator.attach();
    /*     recyclerViewPosts = view.findViewById(R.id.recycler_view_posts);
         recyclerViewPosts.setHasFixedSize(true);
@@ -156,7 +314,12 @@ public class ProfileFragment extends Fragment {
      //   Log.e("ninini", profileId);
         if (profileId.equals(fUser.getUid())) {
             editProfile.setText("Edit profile");
+            send.setVisibility(View.GONE);
+           rate.setVisibility(View.GONE);
         } else {
+            send.setVisibility(View.VISIBLE);
+            rate.setVisibility(View.VISIBLE);
+
             checkFollowingStatus();
         }
 
@@ -300,7 +463,60 @@ return view;
 
     }
 
+    public void ShowDialog()
+    {
+        final AlertDialog popDialog = new AlertDialog.Builder(getContext()).create();
 
+        LinearLayout linearLayout = new LinearLayout(getContext());
+        final RatingBar rating = new RatingBar(getContext());
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        rating.setLayoutParams(lp);
+        rating.setNumStars(5);
+        rating.setStepSize((float) 0.5);
+
+        //add ratingBar to linearLayout
+        linearLayout.addView(rating);
+
+
+        popDialog.setIcon(android.R.drawable.btn_star_big_on);
+        popDialog.setTitle("Add Rating: ");
+
+        //add linearLayout to dailog
+        popDialog.setView(linearLayout);
+
+        popDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Cansel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        popDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(final DialogInterface dialog, int which) {
+                ratingBar.setRating(rating.getRating());
+                HashMap<String, Object> map = new HashMap<>();
+                map.put("rateValue", rating.getRating());
+
+DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("ratings").child(profileId).child(fUser.getUid());
+mDatabase.setValue(map);
+                dialog.dismiss();
+            }
+        });
+
+        rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                System.out.println("Rated val:"+v);
+            }
+        });
+        popDialog.show();
+
+    }
 
     private void getFollowersAndFollowingCount() {
 
@@ -337,6 +553,7 @@ return view;
         FirebaseDatabase.getInstance().getReference().child("users").child(profileId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.e("nnn", profileId );
                 User user = dataSnapshot.getValue(User.class);
                 if (user.getProfilepic()==null || user.getProfilepic().equals("")) {
                     // Log.e("err",user.getProfile_pic());

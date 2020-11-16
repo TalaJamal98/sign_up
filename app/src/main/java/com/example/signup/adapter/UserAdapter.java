@@ -1,6 +1,8 @@
 package com.example.signup.adapter;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.signup.Fragment.HomeFragment;
+import com.example.signup.Fragment.ProfileFragment;
+import com.example.signup.Model.Notification;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -59,14 +63,44 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
         holder.btnFollow.setVisibility(View.VISIBLE);
 
         holder.username.setText(user.getFirstname()+" "+user.getSecondname());
+        if (user.getProfilepic()==null || user.getProfilepic().equals("")) {
 
-        Picasso.get().load(user.getProfilepic()).placeholder(R.mipmap.ic_launcher).into(holder.imageProfile);
+            holder.imageProfile.setImageResource(R.mipmap.ic_launcher);
+
+
+
+        }
+
+
+        else {
+            Picasso.get().load(user.getProfilepic()).into(holder.imageProfile);
+
+        }
+
+
+       // Picasso.get().load(user.getProfilepic()).placeholder(R.mipmap.ic_launcher).into(holder.imageProfile);
 
         isFollowed(user.getId() , holder.btnFollow);
 
         if (user.getId().equals(firebaseUser.getUid())){
             holder.btnFollow.setVisibility(View.GONE);
         }
+
+
+        holder.imageProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString("profileid",user.getId());
+// set Fragmentclass Arguments
+                ProfileFragment fragobj = new ProfileFragment();
+                fragobj.setArguments(bundle);
+                ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container , fragobj).commit();
+
+
+            }
+        });
 
         holder.btnFollow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,13 +187,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Notifications");
         String notId = ref.push().getKey();
 
-        map.put("text", "liked your post.");
-        map.put("isPost", true);
-        map.put("isSeen",false);
+        map.put("text", "Follow you");
+        map.put("isPost", false);
+        map.put("Seen","no");
         map.put("notid",notId);
+        map.put("userid", firebaseUser.getUid());
 
 
-        FirebaseDatabase.getInstance().getReference().child("Notifications").child(firebaseUser.getUid()).child(notId).setValue(map);
+        FirebaseDatabase.getInstance().getReference().child("Notifications").child(userId).child(notId).setValue(map);
+
+
+
     }
 
 }

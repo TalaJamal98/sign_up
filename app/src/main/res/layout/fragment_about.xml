@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".Fragment.AboutFragment"
-    android:background="@color/white"
+    android:background="#f0f0f4"
     >
     <LinearLayout
         android:layout_width="match_parent"

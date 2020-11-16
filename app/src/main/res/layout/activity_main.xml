@@ -8,53 +8,51 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/drawer"
+
     >
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/fragment_container"
-        android:layout_above="@id/bottom"/>
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/bottom"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:ignore="MissingConstraints">
-        <View
+        tools:context=".MainActivity">
+
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_above="@+id/bottom_navigation"
-            android:background="#f0f0f4"></View>
+            android:layout_height="match_parent"
+            android:id="@+id/fragment_container"
+            android:layout_above="@id/bottom"/>
 
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="80dp"
-            android:text="create"
-            android:id="@+id/create"
-            ></Button>
-        <com.google.android.material.bottomnavigation.BottomNavigationView
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/bottom_navigation"
-            app:itemIconTint="@color/drawer_item"
-            app:labelVisibilityMode="unlabeled"
-            android:background="?android:attr/windowBackground"
-            app:menu="@menu/bottom_menu"/>
+            android:id="@+id/bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:ignore="MissingConstraints">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_above="@+id/bottom_navigation"
+                android:background="#f0f0f4"></View>
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/bottom_navigation"
+                android:layout_weight="1"
+
+                app:itemIconTint="@color/drawer_item"
+                app:labelVisibilityMode="unlabeled"
+                android:background="?android:attr/windowBackground"
+                app:menu="@menu/bottom_menu"/>
 
 
 
-    </com.google.android.material.appbar.AppBarLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <com.google.android.material.navigation.NavigationView
@@ -63,7 +61,6 @@
         tools:ignore="MissingConstraints"
         android:id="@+id/nav"
         android:layout_gravity="start"
-        app:headerLayout="@layout/navigation_header"
         app:menu="@menu/navigation_menu"
 
 

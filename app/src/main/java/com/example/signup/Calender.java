@@ -33,10 +33,10 @@ public class Calender extends AppCompatActivity {
         calenderview.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                 date =dayOfMonth + "/" + month + "/" + year;
                 myyear=year;
-                mymonth=month;
+                mymonth=month+1;
                 myday=dayOfMonth;
+                date =myday + "/" + mymonth + "/" + myyear;
 
                 mytext.setText(date);
 

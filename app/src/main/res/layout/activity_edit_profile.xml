@@ -61,7 +61,7 @@
                         android:text="Edit Profile"
 
                         android:textSize="25sp"
-                         />
+                        />
 
 
                 </RelativeLayout>
@@ -264,7 +264,7 @@
                     android:layout_height="match_parent"
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="0dp"
-                     />
+                    />
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -297,14 +297,14 @@
             </RelativeLayout>
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="30dp"
-                    android:orientation="vertical"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="100dp"
-                    >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="100dp"
+                >
 
                 <TextView
                     android:layout_width="match_parent"
@@ -478,31 +478,30 @@
                     android:layout_marginBottom="10dp"
                     />
 
-                    <Button
+                <Button
 
-                        android:id="@+id/back"
-                        android:layout_width="150dp"
-                        android:layout_height="40dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
+                    android:id="@+id/back"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
 
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="30dp"
-                        android:background="@drawable/rounded"
-                        android:enabled="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@drawable/rounded"
+                    android:enabled="true"
 
-                        android:text="Back"
-                        android:textColor="@android:color/white"
+                    android:text="Back"
+                    android:textColor="@android:color/white"
 
-                        >
+                    >
 
-                    </Button>
+                </Button>
             </LinearLayout>
         </LinearLayout>
-            </androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+</androidx.constraintlayout.widget.ConstraintLayout>

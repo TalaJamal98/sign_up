@@ -5,19 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".sign_in">
-<RelativeLayout
-    android:id="@+id/head"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    tools:ignore="MissingConstraints">
-    <ImageView
-        android:layout_width="240dp"
-        android:layout_height="60dp"
-        android:src="@drawable/in"
-        android:layout_marginTop="150dp"
-        ></ImageView>
+    <RelativeLayout
+        android:id="@+id/head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+        <ImageView
+            android:layout_width="240dp"
+            android:layout_height="60dp"
+            android:src="@drawable/in"
+            android:layout_marginTop="150dp"
+            ></ImageView>
 
-</RelativeLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -28,6 +28,8 @@
         app:layout_constraintTop_toBottomOf="@id/head">
 
         <EditText
+            android:paddingHorizontal="10dp"
+
             android:id="@+id/emailLog"
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -37,8 +39,10 @@
             android:hint="Email" />
 
         <EditText
+            android:paddingHorizontal="10dp"
+
             android:layout_width="match_parent"
-android:id="@+id/passwordLog"
+            android:id="@+id/passwordLog"
             android:layout_height="60dp"
             android:layout_marginLeft="20dp"
             android:layout_marginBottom="7dp"
@@ -89,7 +93,7 @@ android:id="@+id/passwordLog"
             android:id="@+id/sign_in_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="5dp"
             android:text="Sign Up"
             android:textColor="@color/yellow"
             android:textSize="20sp" />

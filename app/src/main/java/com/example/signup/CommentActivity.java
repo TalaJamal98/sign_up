@@ -15,6 +15,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.signup.Fragment.APIService;
+import com.example.signup.Notifications.Client;
+import com.example.signup.Notifications.Data;
+import com.example.signup.Notifications.MyResponse;
+import com.example.signup.Notifications.Sender;
+import com.example.signup.Notifications.Token;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,6 +29,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import com.example.signup.Model.Comment;
@@ -35,6 +42,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CommentActivity extends AppCompatActivity {
 
@@ -48,6 +58,10 @@ public class CommentActivity extends AppCompatActivity {
 
     private String postId;
     private String authorId;
+    String userid;
+
+    APIService apiService;
+    boolean notify = false;
 
     FirebaseUser fUser;
     User user;
@@ -67,6 +81,7 @@ public class CommentActivity extends AppCompatActivity {
                 finish();
             }
         });
+        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
         Intent intent = getIntent();
         postId = intent.getStringExtra("postId");
@@ -77,7 +92,6 @@ public class CommentActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         commentList = new ArrayList<>();
-
         commentAdapter = new CommentAdapter(this, commentList, postId);
 
         recyclerView.setAdapter(commentAdapter);
@@ -113,6 +127,8 @@ public class CommentActivity extends AppCompatActivity {
                     Toast.makeText(CommentActivity.this, "No comment added!", Toast.LENGTH_SHORT).show();
 
                 } else {
+                    notify=true;
+
                     putComment();
                     addNotification(postId, authorId);
 
@@ -171,6 +187,63 @@ public class CommentActivity extends AppCompatActivity {
             }
         });
 
+       DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users").child(fUser.getUid());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                if (notify) {
+                    sendNotifiaction(authorId, user.getUsername(), "commented in your Post");
+                }
+                notify = false;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
+
+    private void sendNotifiaction(String receiver, final String username, final String message){
+        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
+        Query query = tokens.orderByKey().equalTo(receiver);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Token token = snapshot.getValue(Token.class);
+                    Data data = new Data(fUser.getUid(), R.mipmap.ic_launcher, username+": "+message, "New Comment",
+                            authorId);
+
+                    Sender sender = new Sender(data, token.getToken());
+
+                    apiService.sendNotification(sender)
+                            .enqueue(new Callback<MyResponse>() {
+                                @Override
+                                public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                                    if (response.code() == 200){
+                                        if (response.body().success != 1){
+                                            Toast.makeText(CommentActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<MyResponse> call, Throwable t) {
+
+                                }
+                            });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void getUserImage() {
@@ -199,11 +272,11 @@ public class CommentActivity extends AppCompatActivity {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Notifications");
         String notId = ref.push().getKey();
 
-        //if(!publisherId.equals(fUser.getUid())) {
-            Log.d("fede", ""+publisherId);
-            Log.d("fede", ""+fUser.getUid());
+        if(!publisherId.equals(fUser.getUid())) {
+            Log.d("pub", ""+publisherId);
+            Log.d("commen", ""+fUser.getUid());
 
-            map.put("userid", publisherId);
+            map.put("userid", fUser.getUid());
 
             map.put("text", user.getUsername()+" commented on your post.");
             map.put("postid", postId);
@@ -211,8 +284,8 @@ public class CommentActivity extends AppCompatActivity {
             map.put("Seen","no");
         map.put("notid",notId);
 
-            FirebaseDatabase.getInstance().getReference().child("Notifications").child(fUser.getUid()).child(notId).setValue(map);
-        //}
+            FirebaseDatabase.getInstance().getReference().child("Notifications").child(publisherId).child(notId).setValue(map);
+        }
     }
 }
 

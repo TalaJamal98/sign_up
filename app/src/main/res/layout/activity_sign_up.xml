@@ -10,14 +10,19 @@
         android:id="@+id/head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints">
+
         <ImageView
             android:layout_width="250dp"
             android:layout_height="70dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="23dp"
+android:layout_alignParentStart="true"
             android:src="@drawable/sign"
-            android:layout_marginTop="50dp"
-
-            tools:ignore="MissingConstraints"></ImageView>
+          ></ImageView>
 
 
     </RelativeLayout>
@@ -31,6 +36,7 @@
             android:id="@+id/first_name"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
+            android:paddingHorizontal="10dp"
             android:layout_marginBottom="7dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -46,6 +52,7 @@
             android:textSize="15sp"
             android:layout_marginLeft="20dp"
             android:layout_marginBottom="7dp"
+            android:paddingHorizontal="10dp"
 
             android:hint="Second name" />
 
@@ -58,6 +65,7 @@
             android:background="@drawable/border"
             android:layout_marginLeft="20dp"
             android:layout_marginBottom="7dp"
+            android:paddingHorizontal="10dp"
 
             android:hint="Password" />
 
@@ -67,6 +75,8 @@
             android:layout_height="40dp"
             android:textSize="15sp"
             android:inputType="textPassword"
+            android:paddingHorizontal="10dp"
+
             android:background="@drawable/border"
             android:layout_marginLeft="20dp"
             android:layout_marginBottom="7dp"
@@ -79,15 +89,18 @@
             android:textSize="15sp"
             android:background="@drawable/border"
             android:layout_marginLeft="20dp"
+            android:paddingHorizontal="10dp"
+
             android:layout_marginBottom="7dp"
             android:hint="Email" />
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginRight="40dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginBottom="7dp"
+            android:layout_marginTop="5dp"
+
             android:gravity="left"
 
             android:text="gender"
@@ -98,12 +111,12 @@
 
         <RadioGroup
             android:gravity="right"
+            android:layout_marginTop="5dp"
             android:id="@+id/radioGender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView1"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="2dp"
             android:orientation="horizontal"
             >
 
@@ -154,7 +167,7 @@
             android:layout_height="wrap_content"
             android:text="Sign Up"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:background="@drawable/rounded"
             ></Button>
     </LinearLayout>
@@ -163,7 +176,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:padding="20dp"
+        android:padding="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -180,7 +193,7 @@
             android:id="@+id/sign_up_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="5dp"
             android:text="Sign In"
             android:textColor="@color/yellow"
             android:textSize="20sp" />

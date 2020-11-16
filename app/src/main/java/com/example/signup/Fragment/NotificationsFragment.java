@@ -55,7 +55,9 @@ public class NotificationsFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
 Notification n=snapshot.getValue(Notification.class);
+                    Log.e("notif", snapshot+"" );
                     notificationList.add(n);
                 }
 

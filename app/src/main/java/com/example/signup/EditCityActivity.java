@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ public class EditCityActivity extends AppCompatActivity implements AdapterView.O
     private Button save;
     ArrayList<customItem> customList;
     private FirebaseUser fUser;
+    ImageView back1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,7 @@ public class EditCityActivity extends AppCompatActivity implements AdapterView.O
         spinner = findViewById(R.id.customSpinner);
 
         fUser = FirebaseAuth.getInstance().getCurrentUser();
+        back1=findViewById(R.id.back);
 
         customList = new ArrayList<>();
         customList.add(new customItem("Select one"));
@@ -87,6 +90,13 @@ flag=1;
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+
+        back1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 

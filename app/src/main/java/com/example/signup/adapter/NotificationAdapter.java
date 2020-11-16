@@ -67,21 +67,18 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Notification n=snapshot.getValue(Notification.class);
-                if (n.getSeen().equals("yes")) flag[0] = true;
-                else flag[0] = false;
+                if(n!=null) {
+                    if (n.getSeen().equals("yes")) flag[0] = true;
+                    else flag[0] = false;
 
-                if (flag[0]==true){
-                    holder.row_linearlayout.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                    if (flag[0] == true) {
+                        holder.row_linearlayout.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                    } else if (flag[0] == false) {
+                        holder.row_linearlayout.setBackgroundColor(Color.parseColor("#f0f0f4"));
+
+                    }
+
                 }
-                else
-                if (flag[0]==false){
-                    holder.row_linearlayout.setBackgroundColor(Color.parseColor("#f2c40d"));
-
-                }
-                Log.e("not", n.getSeen()+"" );
-                Log.e("notid", n.getNotid()+"" );
-                Log.e("not", flag[0]+"" );
-
             }
 
             @Override
@@ -111,7 +108,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
                 if (notification.isIsPost()) {
                     mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE)
-                            .edit().putString("postifd", notification.getPostid()).apply();
+                            .edit().putString("postid", notification.getPostid()).apply();
 
                     ((FragmentActivity)mContext).getSupportFragmentManager()
                             .beginTransaction().replace(R.id.fragment_container, new PostDetailesFragment()).commit();

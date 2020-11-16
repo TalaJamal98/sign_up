@@ -8,18 +8,29 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.signup.ChatAndUserActivity;
 
+import com.example.signup.MainActivity;
+import com.example.signup.Model.Chat;
+import com.example.signup.Model.User;
 import com.example.signup.Model.auction;
 import com.example.signup.adapter.AuctionAdapter;
+import com.example.signup.createEvent;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.example.signup.adapter.PostAdapter;
@@ -33,25 +44,39 @@ public class HomeFragment extends Fragment {
 
     private RecyclerView recyclerViewPosts;
 
+    FirebaseUser firebaseUser ;
+    DatabaseReference databaseReference ;
     private PostAdapter postAdapter;
     private AuctionAdapter auctionAdapter;
 
     private List<Post> postList;
     private List<auction> auctionList;
     private RecyclerView recyclerViewAuction;
+ProgressBar bar;
+    TextView b;
 
     private List<String> followingList;
-
     ImageView chat;
+ImageButton a;
+    private List<String> sendlist ;
+    private List<Chat> chatlist ;
+    private List<String> senderlist ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 chat=view.findViewById(R.id.chat);
+        b=view.findViewById(R.id.chat_badge);
+
+        a=view.findViewById(R.id.create);
+        firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
         recyclerViewPosts = view.findViewById(R.id.recycler_view_posts);
         recyclerViewAuction = view.findViewById(R.id.recycler_view_Auctions);
-
+        bar=view.findViewById(R.id.pregress);
+        chatlist = new ArrayList<>();
+        senderlist = new ArrayList<>();
+        sendlist = new ArrayList<>();
         recyclerViewPosts.setHasFixedSize(true);
         recyclerViewAuction.setHasFixedSize(true);
 
@@ -61,6 +86,8 @@ chat=view.findViewById(R.id.chat);
 
         recyclerViewPosts.setLayoutManager(linearLayoutManager);
         recyclerViewAuction.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+
 
         postList = new ArrayList<>();
         auctionList=new ArrayList<>();
@@ -81,6 +108,91 @@ chat=view.findViewById(R.id.chat);
 
             }
         });
+
+
+        a.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i= new Intent(getActivity(), createEvent.class);
+                startActivity(i);
+            }
+        });
+
+
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Chats");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                chatlist.clear();
+                sendlist.clear();
+                senderlist.clear();
+
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                {
+                    Chat chat = snapshot.getValue(Chat.class);
+                    assert chat != null;
+                    if (chat.getReceiver().equals(firebaseUser.getUid()))
+                    {
+                        //if(!chatlist.contains(chat.getSender()))
+                        sendlist.remove(chat.getSender());
+                        sendlist.add(chat.getSender());
+
+                        chatlist.remove(chat);
+                        chatlist.add(chat);
+
+                    }
+                }
+              //  Log.e("chatlist size", chatlist.size()+"");
+              for (int j =chatlist.size()-1; j >=0; j--) {
+                //    Log.e("chatlist1", chatlist.size()+"");
+
+                    if (chatlist.get(j).getSeenstatus().equals("seen")) {
+                  //      Log.e("chatlist", chatlist.get(j).getMessage());
+                    //    Log.e("J", j+"");
+
+                        chatlist.remove(j);
+                    }
+                }
+              //  Log.e("chatlist size2", chatlist.size()+"");
+
+               for(int i=0;i<sendlist.size();i++) {
+                    for (int j = 0; j < chatlist.size(); j++) {
+
+                        if (chatlist.get(j).getSender().equals(sendlist.get(i))) {
+                            senderlist.remove(sendlist.get(i));
+                            senderlist.add(sendlist.get(i));
+                        }
+                    }
+                }
+                for(int i=0;i<chatlist.size();i++){
+                    Log.e("chat", chatlist.get(i).getMessage()+"" );
+                }
+               /* for(int i=0;i<sendlist.size();i++){
+                    Log.e("send", sendlist.get(i) );
+                }
+*/
+                b.setText(senderlist.size()+"");
+                if(senderlist.size()>0)
+                    b.setVisibility(View.VISIBLE);
+                else
+                    b.setVisibility(View.GONE);
+          //      Log.e("see", senderlist.size()+"" );
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
 
         checkFollowingUsers();
 
@@ -128,6 +240,8 @@ chat=view.findViewById(R.id.chat);
                     }
                 }
                 postAdapter.notifyDataSetChanged();
+                bar.setVisibility(View.GONE);
+
             }
 
 

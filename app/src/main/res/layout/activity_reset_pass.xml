@@ -42,21 +42,21 @@
         android:layout_height="80dp"
         android:layout_marginTop="56dp"
         android:src="@drawable/namee"
-        app:layout_constraintTop_toBottomOf="@id/bar"
+        app:layout_constraintEnd_toEndOf="parent"
 
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="165dp"></ImageView>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bar"
+        tools:ignore="MissingConstraints"></ImageView>
 
     <TextView
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/pic"
         android:layout_marginTop="20dp"
-        android:text="RESET PASSWORD"
         android:gravity="center"
+        android:text="RESET PASSWORD"
         android:textSize="25sp"
-        ></TextView>
+        app:layout_constraintTop_toBottomOf="@id/pic"></TextView>
 
     <!-- <com.google.android.material.textfield.TextInputLayout
          android:layout_width="match_parent"
@@ -73,27 +73,31 @@
          ></com.google.android.material.textfield.TextInputLayout> -->
 
     <TextView
-        app:layout_constraintTop_toBottomOf="@id/text"
-        android:layout_marginTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Enter your email address, we will mail you with a reset link."
         android:textSize="15dp"
-        android:layout_marginLeft="15dp"
-        android:text="Enter your email address, we will mail you with a reset link."></TextView>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/myEmail"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintTop_toBottomOf="@id/text"></TextView>
 
     <EditText
         android:id="@+id/myEmail"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        tools:ignore="MissingConstraints"
-        app:layout_constraintTop_toBottomOf="@id/text"
-        android:text="  Email address"
-        android:background="@drawable/border"
         android:layout_marginTop="70dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+        android:background="@drawable/border"
+        android:layout_marginHorizontal="15dp"
         android:backgroundTint="@color/black"
-        >
+        android:text="  Email address"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text"
+        tools:ignore="MissingConstraints">
 
     </EditText>
 

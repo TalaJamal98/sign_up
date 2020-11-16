@@ -2,19 +2,23 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.signup">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
-        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
+        android:hardwareAccelerated="true"
+
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".StartActivity"></activity>
+        <activity android:name=".CategoryActivity" />
+        <activity android:name=".myAuctions" />
         <activity android:name=".resetPass" />
         <activity android:name=".Calender" />
-        <activity android:name=".myAuctions" />
         <activity android:name=".createEvent" />
         <activity android:name=".event" />
         <activity android:name=".AboutMeActivity" />
@@ -31,6 +35,8 @@
         <activity android:name=".CommentActivity" />
         <activity android:name=".PostActivity" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".FilterActivity" />
+        <activity android:name=".MapActivity" />
         <activity android:name=".sign_up" />
         <activity android:name=".sign_in" />
         <activity android:name=".splash">
@@ -65,8 +71,5 @@
             </intent-filter>
         </service>
     </application>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>

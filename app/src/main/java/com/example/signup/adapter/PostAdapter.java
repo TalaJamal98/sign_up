@@ -4,34 +4,34 @@ import java.text.ParseException;
 import java.util.Date;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.signup.CommentActivity;
+import com.example.signup.EditPostActivity;
 import com.example.signup.FollowerActivity;
-import com.example.signup.Fragment.HomeFragment;
 import com.example.signup.Fragment.PostDetailesFragment;
 import com.example.signup.Fragment.ProfileFragment;
-import com.example.signup.MainActivity;
+import com.example.signup.Model.Notification;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -52,7 +52,6 @@ import com.example.signup.R;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -84,6 +83,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
         final Post post = mPosts.get(position);
         Picasso.get().load(post.getImageurl()).into(holder.postImage);
         // holder.description.setText(post.getDescription());
+if(!post.getPublisher().equals(firebaseUser.getUid()))
+    holder.detail.setVisibility(View.GONE);
+else
+    holder.detail.setVisibility(View.VISIBLE);
 
         FirebaseDatabase.getInstance().getReference().child("users").child(post.getPublisher()).addValueEventListener(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -146,15 +149,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
         holder.username.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new ProfileFragment();
-                AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                FragmentManager fragmentManager = activity.getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                SharedPreferences.Editor editor=mContext.getSharedPreferences("PREFS",mContext.MODE_PRIVATE).edit();
 
-                editor.putString("publisher", post.getPublisher());
-                editor.apply();
-                ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProfileFragment()).commit();
+                Bundle bundle = new Bundle();
+                bundle.putString("profileid",post.getPublisher() );
+// set Fragmentclass Arguments
+                ProfileFragment fragobj = new ProfileFragment();
+                fragobj.setArguments(bundle);
+                ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container , fragobj).commit();
 
 /*
                 Intent intent = new Intent(mContext, ProfileFragment.class);
@@ -166,25 +167,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
         holder.imageProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("ninino", post.getPublisher()+"hi");
+
+                Bundle bundle = new Bundle();
+                bundle.putString("profileid",post.getPublisher() );
+// set Fragmentclass Arguments
+                ProfileFragment fragobj = new ProfileFragment();
+                fragobj.setArguments(bundle);
+                ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container , fragobj).commit();
 
 
-                Fragment fragment = new ProfileFragment();
-                AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                FragmentManager fragmentManager = activity.getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                SharedPreferences.Editor editor=mContext.getSharedPreferences("PREFS",mContext.MODE_PRIVATE).edit();
-
-                editor.putString("publisher", post.getPublisher());
-editor.apply();
-                ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProfileFragment()).commit();
-
-               /* Bundle bundle = new Bundle();
-                bundle.putString("publisherId", post.getPublisher()); //key and value
-                fragment.setArguments(bundle);
-                fragmentTransaction.replace(R.id.fragment_container, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();*/
             }
         });
 
@@ -281,6 +272,16 @@ editor.apply();
             }
         });
 
+        holder.more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit().putString("postid", post.getPostid()).apply();
+
+                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new PostDetailesFragment()).commit();
+            }
+        });
+
         holder.noOfLikes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -303,9 +304,90 @@ editor.apply();
                 intent.putExtra("title", "likes");
                 intent.putExtra("postid", post.getPostid());
 
-                Log.e("hi", post.getPostid());
+                //Log.e("hi", post.getPostid());
 
                 mContext.startActivity(intent);
+            }
+        });
+
+
+        holder.detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu=new PopupMenu(mContext,v);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()){
+                            case R.id.edit:
+
+                                Intent intent = new Intent(mContext, EditPostActivity.class);
+                                //            intent.putExtra("quantity",Integer.parseInt(quantity.getText().toString()));
+                                intent.putExtra("postid",post.getPostid());
+                               mContext.getApplicationContext().startActivity(intent);
+
+                                return true;
+                            case R.id.delete:
+                                FirebaseDatabase.getInstance().getReference("Posts").child(post.getPostid()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful())
+                                            Toast.makeText(mContext,"Deleted!",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                                FirebaseDatabase.getInstance().getReference("Comments").child(post.getPostid()).removeValue();
+                                FirebaseDatabase.getInstance().getReference("Likes").child(post.getPostid()).removeValue();
+
+
+                                DatabaseReference refr = FirebaseDatabase.getInstance().getReference().child("Notifications");
+                                refr.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot requestSnapshot: dataSnapshot.getChildren()) {
+                                            // Log.e("n", "in");
+                                            Log.e("is Post",requestSnapshot.getKey());
+
+                                            FirebaseDatabase.getInstance().getReference().child("Notifications").child(requestSnapshot.getKey()).addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                                    for (DataSnapshot requestSnapshot1: snapshot.getChildren()) {
+                                                        Notification n = requestSnapshot1.getValue(Notification.class);
+                                                        Log.e("notify", requestSnapshot1 + "");
+                                                        if (n.isPost() == true && n.getPostid().equals(post.getPostid())) {
+                                                            // Log.e("notify", n.getNotid()+"" );
+
+                                                            FirebaseDatabase.getInstance().getReference().child("Notifications").child(requestSnapshot.getKey()).child(n.getNotid()).removeValue();
+                                                        }
+                                                    }
+
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                }
+                                            });
+
+                                        }
+                                    }
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                        throw databaseError.toException(); // don't ignore errors
+                                    }
+                                });
+
+                                return true;
+
+                            default:
+                                return false;
+                        }
+
+                    }
+                });
+                popupMenu.inflate(R.menu.post_menu);
+                popupMenu.show();
             }
         });
 
@@ -323,7 +405,7 @@ editor.apply();
         public ImageView like;
         public ImageView comment;
         public ImageView save;
-        public ImageView more;
+        public LinearLayout more;
         public TextView category;
         public TextView prod_name;
         public TextView post_time;
@@ -334,7 +416,7 @@ editor.apply();
         public TextView author;
         public TextView noOfComments;
         public TextView likeT;
-
+public ImageView detail;
         public LinearLayout comLay;
 
         SocialTextView description;
@@ -346,7 +428,7 @@ editor.apply();
             imageProfile = itemView.findViewById(R.id.profile_image);
             postImage = itemView.findViewById(R.id.post_image);
             post_time = itemView.findViewById(R.id.post_time);
-
+detail=itemView.findViewById(R.id.post_details);
             like = itemView.findViewById(R.id.like);
             comment = itemView.findViewById(R.id.comment);
             comLay = itemView.findViewById(R.id.comments);
@@ -355,6 +437,7 @@ editor.apply();
 /*
             more = itemView.findViewById(R.id.more);
 */
+            more = itemView.findViewById(R.id.more);
 
             username = itemView.findViewById(R.id.post_username);
             price = itemView.findViewById(R.id.post_prod_price);
@@ -450,7 +533,7 @@ editor.apply();
             Log.d("fede", "" + publisherId);
             Log.d("fede", "" + firebaseUser.getUid());
 
-            map.put("userid", publisherId);
+            map.put("userid", firebaseUser.getUid());
             map.put("text", "liked your post.");
             map.put("postid", postId);
             map.put("isPost", true);
@@ -458,7 +541,7 @@ editor.apply();
             map.put("notid", notId);
 
 
-            FirebaseDatabase.getInstance().getReference().child("Notifications").child(firebaseUser.getUid()).child(notId).setValue(map);
+            FirebaseDatabase.getInstance().getReference().child("Notifications").child(publisherId).child(notId).setValue(map);
         }
     }
 
@@ -477,6 +560,8 @@ editor.apply();
 
         return niceDateStr;
     }
+
+
 
 
 

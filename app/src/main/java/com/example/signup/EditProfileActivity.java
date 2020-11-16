@@ -39,7 +39,6 @@ import jp.wasabeef.picasso.transformations.BlurTransformation;
 public class EditProfileActivity extends AppCompatActivity {
 
     private ImageView close;
-    private ImageView blur;
 
     private CircleImageView imageProfile;
     private CircleImageView edit;
@@ -59,8 +58,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private Uri mImageUri;
     private StorageTask uploadTask;
     private StorageReference storageRef;
-    BlurImageView blurImageView;
-  //  @Bind(R.id.bluring_image) BlurImageView blurImageView;
+    //  @Bind(R.id.bluring_image) BlurImageView blurImageView;
 
 
     @Override
@@ -102,19 +100,18 @@ public class EditProfileActivity extends AppCompatActivity {
                     // Log.e("err",user.getProfile_pic());
 
                     imageProfile.setImageResource(R.mipmap.ic_launcher);
-                    blurImageView.setImageResource(R.mipmap.ic_launcher);
-                    blurImageView.setBlur(20);
+
 
                 }
 
 
-                 else {
+                else {
                     Picasso.get().load(user.getProfilepic()).into(imageProfile);
-                   // Picasso.get().load(user.getProfilepic()).into(blurImageView);
-                 //   blurImageView.setBlur(20);
+                    // Picasso.get().load(user.getProfilepic()).into(blurImageView);
+                    //   blurImageView.setBlur(20);
 
-                   blurImageView.setImageResource(R.drawable.woman);
-                  //  blurImageView.setBlur(20);
+
+                    //  blurImageView.setBlur(20);
                 }
 
 
@@ -150,7 +147,7 @@ public class EditProfileActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-finish();
+                finish();
             }
         });
 
@@ -208,14 +205,13 @@ finish();
         });
     }
 
-   /* private void updateProfile() {
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("username", username.getText().toString());
-        map.put("bio", bio.getText().toString());
-
-        FirebaseDatabase.getInstance().getReference().child("users").child(fUser.getUid()).updateChildren(map);
-    }
-*/
+    /* private void updateProfile() {
+         HashMap<String, Object> map = new HashMap<>();
+         map.put("username", username.getText().toString());
+         map.put("bio", bio.getText().toString());
+         FirebaseDatabase.getInstance().getReference().child("users").child(fUser.getUid()).updateChildren(map);
+     }
+ */
     private void uploadImage() {
         final ProgressDialog pd = new ProgressDialog(this);
         pd.setMessage("Uploading");

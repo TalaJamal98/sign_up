@@ -49,7 +49,6 @@ public class MessageActivity extends AppCompatActivity {
     CircleImageView RimageView;
 
     TextView textView ;
-    FirebaseUser firebaseUser ;
     DatabaseReference databaseReference ;
     Intent intent ;
     ImageButton imageButton;
@@ -58,6 +57,8 @@ public class MessageActivity extends AppCompatActivity {
     MessageAdapter messageadapter;
     List<Chat> mChat;
     String userid;
+    FirebaseUser firebaseUser ;
+    ValueEventListener seenlistener ;
 
     APIService apiService;
     boolean notify = false;
@@ -121,7 +122,7 @@ public class MessageActivity extends AppCompatActivity {
 
             }
         });
-      //  seenMessage(userid);
+        seenMessage(userid);
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,6 +209,32 @@ public class MessageActivity extends AppCompatActivity {
         });
     }
 
+    public void seenMessage(final String userid)
+    {
+        databaseReference = FirebaseDatabase.getInstance().getReference("Chats");
+        seenlistener = databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                {
+                    Chat chat = snapshot.getValue(Chat.class);
+                    assert chat != null;
+                    if (chat.getReceiver().equals(firebaseUser.getUid()) && chat.getSender().equals(userid))
+                    {
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("seenstatus", "seen");
+                        snapshot.getRef().updateChildren(hashMap);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     public void readmessage(final String myid , final String userid,final String image) {
         mChat = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference("Chats");
@@ -237,6 +264,11 @@ public class MessageActivity extends AppCompatActivity {
 
 
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        databaseReference.removeEventListener(seenlistener);
+    }
 
 
 

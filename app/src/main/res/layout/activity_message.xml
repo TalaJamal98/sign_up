@@ -14,7 +14,7 @@
 
 
         <androidx.appcompat.widget.Toolbar
-            android:background="@drawable/gradient_rec"
+            android:background="#f0f0f4"
             android:id="@+id/toolbar"
             android:layout_height="wrap_content"
             android:layout_width="match_parent">
@@ -35,7 +35,6 @@
                     android:id="@+id/txtmsgtool"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
                     android:text="username"
                     android:textSize="17sp"
                     android:textStyle="bold"

@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -25,11 +26,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
 
 public class event extends AppCompatActivity {
 
@@ -45,6 +51,7 @@ public class event extends AppCompatActivity {
     private StorageReference storageRef;
     Intent intent;
     String myid;
+    ImageView img;
     private CountDownTimer timer;
     String full;
     private TextView auctionDate;
@@ -54,9 +61,11 @@ public class event extends AppCompatActivity {
     int curDay,curMonth,curYear;
     int cyear,cmonth,cday;
     private ImageView back;
+    int finalprice;
 
-
-
+    String finall ;
+    auction user;
+    User  user1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +81,7 @@ public class event extends AppCompatActivity {
         psave=findViewById(R.id.save);
         pup=findViewById(R.id.moree);
         auctionDate=findViewById(R.id.auDate);
-
+img=findViewById(R.id.pic);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,15 +93,9 @@ public class event extends AppCompatActivity {
         Calendar calender= Calendar.getInstance();
         String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calender.getTime());
          curYear = calender.get(Calendar.YEAR);
-         curMonth = calender.get(Calendar.MONTH);
+         curMonth = calender.get(Calendar.MONTH)+1;
          curDay= calender.get(Calendar.DAY_OF_MONTH);
 
-        Toast.makeText(event.this, "curday "+ curDay,
-                Toast.LENGTH_SHORT).show();
-        Toast.makeText(event.this, " curmonth "+ curMonth,
-                Toast.LENGTH_SHORT).show();
-        Toast.makeText(event.this, " curyear "+ curYear,
-                Toast.LENGTH_SHORT).show();
 
 
         Intent intent = getIntent();
@@ -103,23 +106,42 @@ public class event extends AppCompatActivity {
        FirebaseDatabase.getInstance().getReference().child("Auctions").child(myid).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    auction user = dataSnapshot.getValue(auction.class);
+                    user = dataSnapshot.getValue(auction.class);
 
                     pname.setText(user.getName());
-                    pcat.setText(pcat.getText()+" " +user.getCategory());
-                    pdes.setText(pdes.getText()+" "+user.getDescription());
+                    pcat.setText("Category" +user.getCategory());
+                    pdes.setText("Descreption: "+user.getDescription());
                     pprice.setText(user.getPrice());
                     auctionDate.setText(user.getDate());
-                    ptime.setText(user.getTime());
+                    Picasso.get().load(user.getImageurl()).into(img);
+                   DateFormat df = new java.text.SimpleDateFormat("kk:mm:ss");
 
 
-                   String something= user.getTime().toString();
-                    int h= Integer.parseInt(something);
-                    int m= h*60;
-                    int s= m*60;
-                    int ms=s*1000;
-                    num = (long)ms;
+                    long date = System.currentTimeMillis();
 
+                    SimpleDateFormat sdf = new SimpleDateFormat("kk:mm:ss");
+                    sdf.setTimeZone(TimeZone.getTimeZone("GMT+2:00"));
+                    String dateString = sdf.format(date);
+Date curr1=null;
+
+                    Date date1 = null;
+                    Date date2 = null;
+                    try {
+                        curr1=df.parse(dateString);
+                        date1 = df.parse(user.getStartTime());
+                        date2 = df.parse(user.getEndTime());
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    long diff = date2.getTime() - date1.getTime();
+
+
+
+                    long curr=date2.getTime()-curr1.getTime();
+
+                        num = curr;
 
                     full=user.getDate();
 
@@ -128,25 +150,41 @@ public class event extends AppCompatActivity {
                      cmonth= Integer.parseInt(separated[1]);
                      cday= Integer.parseInt(separated[0]);
 
-                    Toast.makeText(event.this, "auction day "+ cday,
-                            Toast.LENGTH_SHORT).show();
-                    Toast.makeText(event.this, "auction month "+ cmonth,
-                            Toast.LENGTH_SHORT).show();
-                    Toast.makeText(event.this, "auction year "+ cyear,
-                            Toast.LENGTH_SHORT).show();
 
-                    if(curDay==cday && curMonth==cmonth && curYear==cyear){
+
+                    if(curDay==cday && curMonth==cmonth && curYear==cyear && num>0){
                         pup.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 if(isRunning) {
 
-                                    String newprice = pprice.getText().toString();
-                                    int finalprice = Integer.valueOf(newprice);
 
-                                    finalprice = finalprice + 10;
-                                    String finall = Integer.toString(finalprice);
-                                    pprice.setText(finall);
+
+                                    FirebaseDatabase.getInstance().getReference().child("users").child(fUser.getUid()).addValueEventListener(new ValueEventListener(){
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        user1=dataSnapshot.getValue(User.class);
+
+
+
+        String newprice =user.getPrice();
+                                           finalprice = Integer.valueOf(newprice);
+
+                                            finalprice = finalprice + 10;
+                                           finall = Integer.toString(finalprice);
+
+                                            pprice.setText(finall);
+
+
+                                        }
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    });
+
+
+
                                 }
 
                             }
@@ -157,12 +195,13 @@ public class event extends AppCompatActivity {
                         start();
                         //onStart();
                         //update();
-                        Toast.makeText(event.this, "year:  "+ cyear,
-                                Toast.LENGTH_SHORT).show();
+
                     }else
                     {
-                        Toast.makeText(event.this, "the auction is held on "+ full,
-                                Toast.LENGTH_SHORT).show();
+if(num<=0){
+    ptime.setText("Finished");
+
+}
                     }
 
 
@@ -182,10 +221,16 @@ public class event extends AppCompatActivity {
         psave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HashMap<String, Object> map = new HashMap<>();
-                map.put("price", pprice.getText().toString());
+                if (user != null && user1 != null) {
+                    if (Integer.parseInt(finall) > Integer.parseInt(user.getPrice())) {
+                        HashMap<String, Object> map = new HashMap<>();
+                        map.put("price", pprice.getText().toString());
+                        map.put("buyer", user1.getUsername());
+                        FirebaseDatabase.getInstance().getReference().child("Auctions").child(myid).updateChildren(map);
+                    }
 
-                FirebaseDatabase.getInstance().getReference().child("Auctions").child(myid).updateChildren(map);
+
+                }
             }
         });
     }
@@ -215,7 +260,7 @@ public class event extends AppCompatActivity {
 
             if (isRunning) {
                 mEndTime = prefs.getLong("endTime", 0);
-                num = mEndTime - System.currentTimeMillis();
+               num = mEndTime - System.currentTimeMillis();
 
                 if (num < 0) {
                     num = 0;
@@ -235,7 +280,7 @@ public class event extends AppCompatActivity {
 
     public void start(){
 
-            mEndTime = System.currentTimeMillis() + num;
+           // mEndTime = System.currentTimeMillis() + num;
             timer = new CountDownTimer(num, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {

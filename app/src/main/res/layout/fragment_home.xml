@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
+
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,34 +11,189 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
+<!--
+    <FrameLayout
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_marginRight="20dp"
+    app:layout_constraintHorizontal_bias="1"
+    app:layout_constraintVertical_bias="0"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:id="@+id/chat1">
 
+    <ImageView android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/chat"
+        android:src="@drawable/chaat11"/>
+
+    <TextView android:layout_height="20dp"
+        android:layout_width="20dp"
+        android:layout_marginRight="-5dp"
+        android:layout_marginTop="3dp"
+        android:id="@+id/chat_badge"
+        android:visibility="gone"
+        android:textSize="10sp"
+        android:text="0"
+        android:textColor="@android:color/white"
+        android:padding="3dp"
+        android:gravity="center"
+        android:background="@drawable/badge_background"
+        android:layout_marginEnd="0dp" android:layout_gravity="right|end|top"/>
+
+</FrameLayout>
 
     <ImageView
-        android:id="@+id/chat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        android:src="@drawable/chaat11"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:src="@drawable/mylogo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0"
-        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintHorizontal_bias="0"
+        android:layout_marginBottom="1dp"
+        android:layout_marginTop="1dp"
+android:id="@+id/log"
         ></ImageView>
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="60dp"
-        android:src="@drawable/mylogo"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="10dp"
-        tools:layout_editor_absoluteY="18dp"></ImageView>
+
+
+    <View
+        android:id="@+id/v"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/chat1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+android:layout_marginTop="15dp"
+        android:background="#404040"
+        ></View>-->
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bar"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/toolbar"
+            android:background="@color/white">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!--
+                                <ImageView
+                                    android:layout_width="180dp"
+                                    android:layout_height="30dp"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginStart="108dp"
+                                    android:layout_marginTop="0dp"
+                                    android:src="@drawable/logo" />
+                -->
+                <ImageView
+                    android:id="@+id/back"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="left"
+                    android:src="@drawable/mylogo"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="8dp"
+                    ></ImageView>
+
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="17dp"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="BUY IT BACK"
+                    android:textColor="#737373"
+
+                    android:textSize="20sp" />
+
+                <FrameLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="15dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="12dp"
+                    >
+                    <ImageView
+                        android:id="@+id/chat"
+
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/chaat11"
+
+                        />
+
+                    <TextView android:layout_height="20dp"
+                        android:layout_width="20dp"
+                        android:layout_marginRight="-5dp"
+                        android:layout_marginTop="3dp"
+                        android:id="@+id/chat_badge"
+                        android:visibility="gone"
+                        android:textSize="10sp"
+                        android:text="0"
+                        android:textColor="@android:color/white"
+                        android:padding="3dp"
+                        android:gravity="center"
+                        android:background="@drawable/badge_background"
+                        android:layout_marginEnd="0dp" android:layout_gravity="right|end|top"/>
+
+                </FrameLayout>
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+    <View
+        android:id="@+id/sp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintTop_toBottomOf="@+id/bar"
+        android:background="#b3b3b3"
+        ></View>
+
+    <ScrollView
+        app:layout_constraintTop_toBottomOf="@+id/sp"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        >
+    <LinearLayout
+        android:layout_marginTop="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+        >
+<!--    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        >
 
     <TextView
         android:layout_width="wrap_content"
@@ -47,10 +206,6 @@
         app:layout_constraintHorizontal_bias="0"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chat"
         ></TextView>
 
 
@@ -64,26 +219,30 @@
         app:layout_constraintVertical_bias="0"
         app:layout_constraintHorizontal_bias="0"
         android:layout_marginLeft="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/hello"
-        app:layout_constraintTop_toTopOf="@+id/hello"
+        android:layout_marginTop="10dp"
+
         android:textStyle="bold"
 android:fontFamily="sans-serif"
         ></TextView>
 
-
+    </LinearLayout>-->
+<!--
 
     <View
         android:id="@+id/sp"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="100dp"
        app:layout_constraintTop_toBottomOf="@+id/hello"
         android:background="#b3b3b3"
         ></View>
+-->
 
 
     <TextView
+        android:layout_marginLeft="15dp"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/Auctions"
@@ -95,7 +254,7 @@ android:fontFamily="sans-serif"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/hello"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sp"
         android:textStyle="bold"
         android:fontFamily="sans-serif"
@@ -103,31 +262,58 @@ android:fontFamily="sans-serif"
 
 
         ></TextView>
+<HorizontalScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintVertical_bias="0"
+    app:layout_constraintTop_toBottomOf="@id/Auctions"
+android:layout_marginTop="2dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    android:id="@+id/scroll"
+    >
+    <LinearLayout
+        android:id="@+id/l1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal"
+>
 
+        <ImageButton
+            android:id="@+id/create"
+            android:layout_width="94dp"
+            android:layout_height="94dp"
+android:src="@drawable/ic_addim"
+            android:background="@drawable/circle_image"
+            android:layout_marginRight="10dp"
+            ></ImageButton>
     <androidx.recyclerview.widget.RecyclerView
 
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        app:layout_constraintVertical_bias="0"
-app:layout_constraintTop_toBottomOf="@id/Auctions"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
 
         android:id="@+id/recycler_view_Auctions"/>
+    </LinearLayout>
+</HorizontalScrollView>
+
     <View
         android:id="@+id/sp1"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        app:layout_constraintBottom_toTopOf="@+id/products"
+        android:layout_height="0.8dp"
+        android:layout_marginTop="10dp"
         android:background="#b3b3b3"
-        ></View>
+        android:layout_marginHorizontal="15dp"
+
+        app:layout_constraintBottom_toTopOf="@+id/products"
+        app:layout_constraintTop_toBottomOf="@+id/scroll"></View>
 
 
     <TextView
+        android:layout_marginLeft="15dp"
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -140,8 +326,8 @@ app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/hello"
-        app:layout_constraintTop_toBottomOf="@+id/recycler_view_Auctions"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scroll"
         android:textStyle="bold"
         android:fontFamily="sans-serif"
 
@@ -149,25 +335,53 @@ app:layout_constraintBottom_toBottomOf="parent"
 
         ></TextView>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/products"
+            app:layout_constraintVertical_bias="1.0"
+            >
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_posts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="15dp"
+        />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
+        android:background="@color/white"></LinearLayout>
+
+    </LinearLayout>
+    </ScrollView>
+    <ProgressBar
+        android:id="@+id/pregress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/products"
-        app:layout_constraintVertical_bias="1.0" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
-</ScrollView>
+
 <!--
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout android:layout_width="match_parent"

@@ -5,4 +5,10 @@
     <string name="open">empty</string>
 
     <string name="close">empty</string>
+
+    <string name="MODEL">list</string>
+
+    <string name="position">position</string>
+
+    <string name="mapbox_access_token">pk.eyJ1IjoidGFsYXJ1YmEiLCJhIjoiY2toOTJ6MDE0MDR4cjMxcGpicXJ6MzVvNCJ9.LrxU84YgNF0pKBV1-oSIrA</string>
 </resources>

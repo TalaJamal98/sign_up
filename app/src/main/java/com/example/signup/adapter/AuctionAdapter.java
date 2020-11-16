@@ -27,6 +27,8 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class AuctionAdapter extends RecyclerView.Adapter<AuctionAdapter.viewholder>{
 
     private Context mContext;
@@ -52,6 +54,7 @@ public class AuctionAdapter extends RecyclerView.Adapter<AuctionAdapter.viewhold
         final auction auctionn =mauction.get(position);
 
         holder.cat.setText(auctionn.getCategory());
+        Picasso.get().load(auctionn.getImageurl()).into(holder.profile);
 
         FirebaseDatabase.getInstance().getReference().child("users").child(auctionn.getPublisher()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -60,7 +63,7 @@ public class AuctionAdapter extends RecyclerView.Adapter<AuctionAdapter.viewhold
 
                 holder.name.setText(user.getFirstname()+" "+user.getSecondname());
 
-                holder.name.setOnClickListener(new View.OnClickListener() {
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent i= new Intent(mContext, event.class);
@@ -90,16 +93,17 @@ public class AuctionAdapter extends RecyclerView.Adapter<AuctionAdapter.viewhold
 
 
     public class  viewholder extends RecyclerView.ViewHolder{
-        public ImageView profile;
+
         public TextView name;
         public TextView cat;
-
+CircleImageView profile;;
         public viewholder(@NonNull View itemView) {
             super(itemView);
 
             profile= itemView.findViewById(R.id.auction_image);
             name=itemView.findViewById(R.id.name);
             cat=itemView.findViewById(R.id.prod);
+
         }
     }
 
