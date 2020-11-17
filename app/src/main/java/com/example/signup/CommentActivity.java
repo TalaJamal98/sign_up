@@ -215,7 +215,7 @@ public class CommentActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Token token = snapshot.getValue(Token.class);
-                    Data data = new Data(fUser.getUid(), R.mipmap.ic_launcher, username+": "+message, "New Comment",
+                    Data data = new Data(fUser.getUid(), R.drawable.mylogo, username+": "+message, "New Comment",
                             authorId);
 
                     Sender sender = new Sender(data, token.getToken());

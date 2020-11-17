@@ -284,7 +284,7 @@ public class ProfileFragment extends Fragment {
 
                 for(DataSnapshot rating:snapshot.getChildren()){
                     Log.e("rate", rating.child("rateValue").getValue()+"" );
-                    rateVal[0] = rateVal[0] +(double)rating.child("rateValue").getValue();
+                    rateVal[0] += Double.parseDouble(rating.child("rateValue").getValue().toString());
                     count++;
                 }
                 if(count>0)

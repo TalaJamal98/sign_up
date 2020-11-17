@@ -120,7 +120,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:text="AUCTION WILL BE HELD ON: ">
+                android:text="AUCTION HELD ON: ">
 
             </TextView>
 
@@ -156,7 +156,7 @@
         android:layout_height="wrap_content"
         android:text="7 hours"
         android:id="@+id/time"
-
+android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/price"
         tools:layout_editor_absoluteX="240dp"
         tools:ignore="MissingConstraints" />
@@ -167,7 +167,8 @@
             android:layout_width="150dp"
             android:layout_height="40sp"
             android:layout_marginTop="28dp"
-            android:background="@drawable/rounded"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/but"
             android:text="save"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

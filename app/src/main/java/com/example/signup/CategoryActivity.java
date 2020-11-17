@@ -1,6 +1,7 @@
 package com.example.signup;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,6 +30,17 @@ public class CategoryActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Categories");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         b=findViewById(R.id.b);
         rvList = findViewById(R.id.list);
         adapter = new Adapter(this);
@@ -189,7 +201,7 @@ public class CategoryActivity extends AppCompatActivity {
         model1_1_5.models.add(model1_1_5_5);
 
 
-        model1 model1_2 = new model1("Manuela Kass", 1);
+        model1 model1_2 = new model1("Electronics", 1);
         model1 model1_2_1 = new model1("Roseanna Branham", 2);
         model1 model1_2_1_1 = new model1("Dennise Lasso", 3);
         model1 model1_2_1_2 = new model1("Sabrina Shively", 3);
@@ -214,22 +226,22 @@ public class CategoryActivity extends AppCompatActivity {
 //        model1_1.models.add(model1_2_4);
 
 
-        model1 model1_3 = new model1("Arlinda Fogal", 1);
+  //      model1 model1_3 = new model1("Arlinda Fogal", 1);
 
-        model1 model1_4 = new model1("Stephen Cabe", 1);
+     /*   model1 model1_4 = new model1("Stephen Cabe", 1);
         model1 model1_4_1 = new model1("Cherilyn Lehn", 2);
         model1 model1_4_2 = new model1("Lashay Baumer", 2);
         model1 model1_4_3 = new model1("Abbie Kilmer", 2);
-        model1 model1_4_4 = new model1("Clinton Boyers", 2);
-        model1_4.models.add(model1_4_1);
+        model1 model1_4_4 = new model1("Clinton Boyers", 2);*/
+      /*  model1_4.models.add(model1_4_1);
         model1_4.models.add(model1_4_2);
         model1_4.models.add(model1_4_3);
-        model1_4.models.add(model1_4_4);
+        model1_4.models.add(model1_4_4);*/
 
         models.add(model1_1);
         models.add(model1_2);
-        models.add(model1_3);
-        models.add(model1_4);
+    //    models.add(model1_3);
+      //  models.add(model1_4);
 
 
         return models;

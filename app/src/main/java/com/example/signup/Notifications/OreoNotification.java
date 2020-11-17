@@ -13,7 +13,7 @@ import android.os.Build;
 public class OreoNotification extends ContextWrapper {
 
     private static final String CHANNEL_ID = "com.example.signup";
-    private static final String CHANNEL_NAME = "signup";
+    private static final String CHANNEL_NAME = "BiB";
 
     private NotificationManager notificationManager;
 

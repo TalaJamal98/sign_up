@@ -4,7 +4,7 @@
         <!-- Customize your theme here. -->
         <item name="colorAccent">@color/yellow</item>
         <item name="colorPrimary">@color/yellow</item>
-        <item name="colorPrimaryDark">#f0f0f4</item>
+        <item name="colorPrimaryDark">@color/yellow</item>
     </style>
 
 

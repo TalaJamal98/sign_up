@@ -2,6 +2,7 @@ package com.example.signup.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -113,11 +114,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                     ((FragmentActivity)mContext).getSupportFragmentManager()
                             .beginTransaction().replace(R.id.fragment_container, new PostDetailesFragment()).commit();
                 } else {
-                    mContext.getSharedPreferences("PROFILE", Context.MODE_PRIVATE)
-                            .edit().putString("profileId", notification.getUserid()).apply();
-
-                    ((FragmentActivity)mContext).getSupportFragmentManager()
-                            .beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("profileid",notification.getUserid());
+// set Fragmentclass Arguments
+                    ProfileFragment fragobj = new ProfileFragment();
+                    fragobj.setArguments(bundle);
+                    ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container , fragobj).commit();
                 }
             }
         });

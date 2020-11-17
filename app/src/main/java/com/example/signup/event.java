@@ -109,7 +109,7 @@ img=findViewById(R.id.pic);
                     user = dataSnapshot.getValue(auction.class);
 
                     pname.setText(user.getName());
-                    pcat.setText("Category" +user.getCategory());
+                    pcat.setText("Category: " +user.getCategory());
                     pdes.setText("Descreption: "+user.getDescription());
                     pprice.setText(user.getPrice());
                     auctionDate.setText(user.getDate());

@@ -5,6 +5,8 @@ import android.content.res.Resources;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.graphics.Color;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +39,7 @@ int flag=0;
 
         final model1 model = modelsAll.get(position);
         holder.textView.setText(model.name);
+        holder.itemView.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
         holder.itemView.setTag(R.string.MODEL, model);
         holder.itemView.setTag(R.string.position, position);
@@ -51,15 +54,25 @@ int flag=0;
                 break;
             case OPENED:
                 holder.imgArrow.setImageResource(R.drawable.down);
+
                 break;
         }
 
         if (model.models.isEmpty()) {
             holder.imgArrow.setVisibility(View.INVISIBLE);
             holder.viewDashed.setVisibility(View.VISIBLE);
+            holder.viewDashed2.setVisibility(View.VISIBLE);
+            holder.viewDashed1.setVisibility(View.GONE);
+
+
+
         } else {
             holder.imgArrow.setVisibility(View.VISIBLE);
             holder.viewDashed.setVisibility(View.INVISIBLE);
+            holder.viewDashed1.setVisibility(View.VISIBLE);
+            holder.viewDashed2.setVisibility(View.GONE);
+            holder.itemView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -70,10 +83,16 @@ int flag=0;
                 model1 rootModel = (model1) v.getTag(R.string.MODEL);
                 if (rootModel.models.isEmpty()) {
 for(int i=0;i<modelsAll.size();i++){
-    if(modelsAll.get(i).models.isEmpty())
+    if(modelsAll.get(i).models.isEmpty()) {
         modelsAll.get(i).setSelected(false);
+        holder.itemView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+
+    }
+
 }
+
                     model.setSelected(true);
+                    holder.itemView.setBackgroundColor(Color.parseColor("#f0f0f4"));
 
 
                     return;
@@ -158,6 +177,8 @@ for(int i=0;i<modelsAll.size();i++){
         TextView textView;
         ImageView imgArrow;
         View viewDashed;
+        View viewDashed1;
+        View viewDashed2;
 String cat;
         public ViewHolder(View itemView) {
 
@@ -166,6 +187,8 @@ String cat;
             imgArrow = (ImageView) itemView.findViewById(R.id.imgArrow);
             rlContent = (RelativeLayout) itemView.findViewById(R.id.rlContent);
             viewDashed = itemView.findViewById(R.id.viewDashed);
+            viewDashed1 = itemView.findViewById(R.id.viewDashed1);
+            viewDashed2 = itemView.findViewById(R.id.viewDashed2);
             cat="";
         }
     }

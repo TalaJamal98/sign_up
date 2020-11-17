@@ -1,34 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CommentActivity"
+    >
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
+        android:background="?android:attr/windowBackground"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="30dp"
-            android:visibility="gone"
-            android:background="#2d7af2" />
+        android:id="@+id/list"
+        android:layout_below="@id/toolbar"
+        android:layout_above="@id/bottom"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="0dp"
-            android:paddingTop="15dp" />
+    <RelativeLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+
+        android:padding="5dp"
+        android:layout_margin="5dp"
+        >
 
         <Button
             android:id="@+id/b"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="click"
-            android:layout_alignParentBottom="true"
-            ></Button>
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/rounded"
+            android:text="Save"></Button>
+
     </RelativeLayout>
 
+</RelativeLayout>
 
 
+
+    <!--<androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar"
+            android:layout_above="@id/b"
+            android:paddingLeft="0dp"
+            android:paddingTop="15dp" />
+
+-->

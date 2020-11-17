@@ -49,7 +49,6 @@ public class sign_in extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         checker= user.isEmailVerified();
         if(checker){
-            Toast.makeText(sign_in.this, "all great", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(sign_in.this , MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);

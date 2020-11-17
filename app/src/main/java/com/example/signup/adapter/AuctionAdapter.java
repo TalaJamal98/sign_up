@@ -54,7 +54,6 @@ public class AuctionAdapter extends RecyclerView.Adapter<AuctionAdapter.viewhold
         final auction auctionn =mauction.get(position);
 
         holder.cat.setText(auctionn.getCategory());
-        Picasso.get().load(auctionn.getImageurl()).into(holder.profile);
 
         FirebaseDatabase.getInstance().getReference().child("users").child(auctionn.getPublisher()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -62,6 +61,7 @@ public class AuctionAdapter extends RecyclerView.Adapter<AuctionAdapter.viewhold
                 User user = dataSnapshot.getValue(User.class);
 
                 holder.name.setText(user.getFirstname()+" "+user.getSecondname());
+                Picasso.get().load(user.getProfilepic()).into(holder.profile);
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override

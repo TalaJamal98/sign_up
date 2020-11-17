@@ -324,7 +324,7 @@ else
                                 Intent intent = new Intent(mContext, EditPostActivity.class);
                                 //            intent.putExtra("quantity",Integer.parseInt(quantity.getText().toString()));
                                 intent.putExtra("postid",post.getPostid());
-                               mContext.getApplicationContext().startActivity(intent);
+                               mContext.startActivity(intent);
 
                                 return true;
                             case R.id.delete:
@@ -340,12 +340,12 @@ else
                                 FirebaseDatabase.getInstance().getReference("Likes").child(post.getPostid()).removeValue();
 
 
-                                DatabaseReference refr = FirebaseDatabase.getInstance().getReference().child("Notifications");
-                                refr.addListenerForSingleValueEvent(new ValueEventListener() {
+                                DatabaseReference refer = FirebaseDatabase.getInstance().getReference().child("Notifications");
+                                refer.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         for (DataSnapshot requestSnapshot: dataSnapshot.getChildren()) {
-                                            // Log.e("n", "in");
+                                             Log.e("n", "in");
                                             Log.e("is Post",requestSnapshot.getKey());
 
                                             FirebaseDatabase.getInstance().getReference().child("Notifications").child(requestSnapshot.getKey()).addValueEventListener(new ValueEventListener() {
